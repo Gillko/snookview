@@ -1,0 +1,12 @@
+[submodule "app/Plugin/Debugkit/app/Plugin/DebugKit"]
+	path = app/Plugin/Debugkit/app/Plugin/DebugKit
+	url = https://github.com/cakephp/debug_kit.git
+[submodule "app/Plugin/DebugKit/debug_kit"]
+	path = app/Plugin/DebugKit/debug_kit
+	url = https://github.com/cakephp/debug_kit.git
+[submodule "app/Plugin/debug_kit"]
+	path = app/Plugin/debug_kit
+	url = https://github.com/cakephp/debug_kit.git
+[submodule "Plugin/Slugger"]
+	path = Plugin/Slugger
+	url = git://github.com/jeremyharris/slugger.git
