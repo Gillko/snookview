@@ -85,6 +85,11 @@
 					);
 				?>
 				<ul class="dropdown-menu">
+					<?php if($current_user['user_id'] == 1 && $current_user['user_role'] == 'admin'): ?>
+						<li role="presentation" class="dropdown text-center">
+							<?php echo $this->Html->link(__('Backoffice'), array('admin' => true, 'controller' => 'users', 'action' => 'index')); ?>
+						</li>
+					<?php endif; ?>
 					<li role="presentation" class="dropdown text-center">
 						<?php echo $this->Html->link(__('Account'), array('controller' => 'users', 'action' => 'profile', $current_user['user_id'])); ?>
 					</li>
