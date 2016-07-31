@@ -174,34 +174,34 @@
 <div class="row bgWhite">
 	<div class="col-md-3">
 	</div>
-	<div class="col-md-1 col-sm-4 padding-bottom">
+	<div class="col-md-1 col-sm-4 col-xs-4 padding-bottom">
 		<a href="https://www.facebook.com/snookview/" class="" data-lang="en" target="_blank">
 			<?php echo $this->Html->image('assets/fb.png', array('class' => 'socialImgLarge center-block', 'alt' => 'https://www.facebook.com/snookview')); ?>
 		</a>
 	</div>
-	<div class="col-md-1 col-sm-4 padding-bottom">
+	<div class="col-md-1 col-sm-4 col-xs-4 padding-bottom">
 		<a href="https://twitter.com/snookview" class="" data-lang="en" target="_blank">
 			<?php echo $this->Html->image('assets/tw.png', array('class' => 'socialImgLarge center-block', 'alt' => 'https://twitter.com/snookview')); ?>
 		</a>
 	</div>
-	<div class="col-md-1 col-sm-4 padding-bottom">
+	<div class="col-md-1 col-sm-4 col-xs-4 padding-bottom">
 		<a href="https://www.youtube.com/channel/UC6hrDfllhCdWtiW-HI2stDw" class="" data-lang="en" target="_blank">
 			<?php echo $this->Html->image('assets/yt.png', array('class' => 'socialImgLarge center-block', 'alt' => 'https://www.youtube.com/channel/UC6hrDfllhCdWtiW-HI2stDw')); ?>
 		</a>
 
 	</div>
-	<div class="col-md-1 col-sm-4 padding-bottom">
+	<div class="col-md-1 col-sm-4 col-xs-4 padding-bottom">
 		<a href="https://plus.google.com/+SnookviewBe147" class="" data-lang="en" target="_blank">
 			<?php echo $this->Html->image('assets/g+.png', array('class' => 'socialImgLarge center-block', 'alt' => 'https://plus.google.com/+SnookviewBe147')); ?>
 		</a>
 
 	</div>
-	<div class="col-md-1 col-sm-4 padding-bottom">
+	<div class="col-md-1 col-sm-4 col-xs-4 padding-bottom">
 		<a href="https://vine.co/Snookview" class="" data-lang="en" target="_blank">
 			<?php echo $this->Html->image('assets/vine.png', array('class' => 'socialImgLarge center-block', 'alt' => 'https://vine.co/Snookview')); ?>
 		</a>
 	</div>
-	<div class="col-md-1 col-sm-4 padding-bottom">
+	<div class="col-md-1 col-sm-4 col-xs-4 padding-bottom">
 		<a href="https://www.instagram.com/snookview/" class="" data-lang="en" target="_blank">
 			<?php echo $this->Html->image('assets/instagram.png', array('class' => 'socialImgLarge center-block', 'alt' => 'https://www.instagram.com/snookview/')); ?>
 		</a>
