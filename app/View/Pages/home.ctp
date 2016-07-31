@@ -216,7 +216,7 @@
 	firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 	var player;
 	var video_sort = '<?php echo $video['Video']['video_sort'] ?>';
-	console.log(video_sort);
+	//console.log(video_sort);
 	function onYouTubePlayerAPIReady() {
 		if(video_sort == 'Single'){
 			player = new YT.Player('player', {
