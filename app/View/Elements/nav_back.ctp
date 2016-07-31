@@ -34,7 +34,7 @@
 				?>
 				<ul class="dropdown-menu">
 					<li role="presentation" class="dropdown text-center">
-						<?php echo $this->Html->link(__('Favorites'), array('controller' => 'Favorites', 'action' => 'index')); ?>
+						<?php echo $this->Html->link(__('Favorites'), array('controller' => 'favorites', 'action' => 'index')); ?>
 					</li>
 					<li role="presentation" class="dropdown text-center">
 						<?php echo $this->Html->link(__('Comments'), array('controller' => 'comments', 'action' => 'index')); ?>
