@@ -274,7 +274,7 @@
 	Router::connect("/videos/uk-championship-2012/first-round/mark-williams-vs-mark-king", array("controller" => "videos", "action" => "view", 9));
 	Router::connect("/videos/uk-championship-2012/first-round/matthew-stevens-vs-dominic-dale-snooker-extra", array("controller" => "videos", "action" => "view", 10));
 	Router::connect("/videos/uk-championship-2012/second-round/matthew-stevens-vs-marco-fu", array("controller" => "videos", "action" => "view", 11));
-	Router::connect("/videos/uk-championship-2012/second-round/stephen-maguire-vs-stuart-bingham-highlights-", array("controller" => "videos", "action" => "view", 12));
+	Router::connect("/videos/uk-championship-2012/second-round/stephen-maguire-vs-stuart-bingham-highlights", array("controller" => "videos", "action" => "view", 12));
 	Router::connect("/videos/uk-championship-2012/second-round/mark-joyce-vs-ali-carter-snooker-extra", array("controller" => "videos", "action" => "view", 13));
 	Router::connect("/videos/uk-championship-2012/second-round/mark-selby-vs-ryan-day", array("controller" => "videos", "action" => "view", 14));
 	Router::connect("/videos/uk-championship-2012/second-round/john-higgins-vs-mark-davis", array("controller" => "videos", "action" => "view", 15));
@@ -531,6 +531,7 @@
 	Router::connect("/videos/uk-championship-2014/semi-finals/judd-trump-vs-stephen-maguire", array("controller" => "videos", "action" => "view", 266));
 	Router::connect("/videos/uk-championship-2014/final/ronnie-osullivan-vs-judd-trump", array("controller" => "videos", "action" => "view", 267));
 	Router::connect("/videos/the-masters-2015/first-round/mark-selby-vs-shaun-murphy", array("controller" => "videos", "action" => "view", 268));
+	Router::connect("/videos/the-masters-2015/first-round/stuart-bingham-vs-marco-fu", array("controller" => "videos", "action" => "view", 269));
 
 	Router::connect('/videos/*', array('controller' => 'videos', 'action' => 'view'));
 

@@ -27,7 +27,6 @@
 				<th><?php echo $this->Paginator->sort('user_image', 'Image'); ?></th>
 				<th><?php echo $this->Paginator->sort('user_created', 'Created'); ?></th>
 				<th><?php echo $this->Paginator->sort('user_modified', 'Modified'); ?></th>
-				<th><?php echo $this->Paginator->sort('user_deleted', 'Deleted'); ?></th>
 				<th><?php echo $this->Paginator->sort('user_lastlogin', 'Last Login'); ?></th>
 				<th><?php echo $this->Paginator->sort('user_locked', 'Locked'); ?></th>
 				<th><?php echo $this->Paginator->sort('user_confirmed', 'Confirmed'); ?></th>
