@@ -19,6 +19,13 @@
  * @since         CakePHP(tm) v 0.2.9
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+
+/*VIDEOS THAT ARE PART TWO OR HIGHER AND CAN BE DELETED*/
+	/* 2, 20, 23, 47, 51, 53, 66, 70, 77, 85, 90, 94, 95, 99, 100, 106, 107, 108, 109, 111, 112, 113, 115, 116, 117, 136, 139, 140, 142, 167, 183,184, 188, 194, 195, 196, 206, 209, 210, 211, 214, 215, 219, 226, 227, 228, 230, 231, 232*/
+
+/*VIDEOS THAT NEED TO BE CHANGED ON YOUTUBE*/
+/*I'm on video 50*/
+
 /**
  * Here, we are connecting '/' (base path) to controller called 'Pages',
  * its action called 'display', and we pass a param to select the view file
