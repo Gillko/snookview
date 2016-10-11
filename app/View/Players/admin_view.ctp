@@ -31,7 +31,7 @@
 		</tr>
 		<tr>
 			<td><?php echo h($player['Player']['player_id']); ?></td>
-			<td><?php echo h($player['Player']['slug']); ?></td>
+			<td><?php echo h($player['Player']['player_slug']); ?></td>
 			<td><?php echo h($player['Player']['player_firstname']); ?></td>
 			<td><?php echo h($player['Player']['player_surname']); ?></td>
 			<td><?php echo h(date("d-m-Y", strtotime($player['Player']['player_birthDate']))); ?></td>

@@ -23,3 +23,24 @@
 		</tr>
 	</table>
 </div>
+<div class="related">
+	<h3><?php echo __('Related Ranking'); ?></h3>
+	<?php if (!empty($season['Ranking'])): ?>
+	<div class="table-responsive">
+		<table class="table table-striped table-bordered">
+		<tr>
+			<th><?php echo __('Id'); ?></th>
+			<th><?php echo __('Rank'); ?></th>
+			<th><?php echo __('Points'); ?></th>
+		</tr>
+		<?php foreach ($season['Ranking'] as $ranking): ?>
+			<tr>
+				<td><?php echo $this->Html->link($ranking['ranking_id'], array('controller' => 'rankings', 'action' => 'view', $ranking['ranking_id'])); ?></td>
+				<td><?php echo $ranking['ranking_rank']; ?></td>
+				<td><?php echo $ranking['ranking_points']; ?></td>
+			</tr>
+		<?php endforeach; ?>
+		</table>
+	</div>
+	<?php endif; ?>
+</div>

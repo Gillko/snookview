@@ -5,7 +5,7 @@
 	<?php //echo debug($test); ?>
 	<div class="col-md-2"></div>
 	<div class="col-md-8 noPaddingTablet noPaddingMobile ranking front">
-		<h3><?php echo __('Ranking World Snooker'); ?></h3>
+		<h3><?php echo __('Ranking World Snooker 2015-2016'); ?></h3>
 		<div class="table-responsive">
 			<table class="text-center">
 				<tr>
