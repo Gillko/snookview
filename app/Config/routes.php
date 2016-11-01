@@ -24,7 +24,7 @@
 	/* 2, 20, 23, 47, 51, 53, 66, 70, 77, 85, 90, 94, 95, 99, 100, 106, 107, 108, 109, 111, 112, 113, 115, 116, 117, 136, 139, 140, 142, 167, 183,184, 188, 194, 195, 196, 206, 209, 210, 211, 214, 215, 219, 226, 227, 228, 230, 231, 232*/
 
 /*VIDEOS THAT NEED TO BE CHANGED ON YOUTUBE*/
-/*I'm on video 92 page 9 on youtube*/
+/*I'm on video 128 page 8 on youtube*/
 
 /**
  * Here, we are connecting '/' (base path) to controller called 'Pages',
