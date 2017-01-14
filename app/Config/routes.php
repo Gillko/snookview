@@ -540,6 +540,7 @@
 	Router::connect("/videos/the-masters-2015/first-round/mark-selby-vs-shaun-murphy", array("controller" => "videos", "action" => "view", 268));
 	Router::connect("/videos/the-masters-2015/first-round/stuart-bingham-vs-marco-fu", array("controller" => "videos", "action" => "view", 269));
 	Router::connect("/videos/the-masters-2015/first-round/stuart-bingham-vs-marco-fu-highlights", array("controller" => "videos", "action" => "view", 270));
+	Router::connect("/videos/the-masters-2015/first-round/judd-trump-vs-stephen-maguire", array("controller" => "videos", "action" => "view", 271));
 
 	Router::connect('/videos/*', array('controller' => 'videos', 'action' => 'view'));
 
