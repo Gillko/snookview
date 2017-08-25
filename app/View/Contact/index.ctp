@@ -6,10 +6,10 @@
 	</div>
 	<div class="col-md-3 noPaddingTablet noPaddingMobile">
 		<div class="contact-image">
-			<?php echo $this->Html->image('/img/contact/contact.png', array('class' => 'imgHalf img-responsive')); ?>
+			<a href="http://gillesvanpeteghem.be" target="_blank"><?php echo $this->Html->image('/img/contact/contact.png', array('class' => 'imgHalf img-responsive')); ?></a>
 		</div>
 		<div class="contact-social">
-			<p class="text-center">Gilles Vanpeteghem</p>
+			<p class="text-center"><a href="http://gillesvanpeteghem.be" target="_blank">Gilles Vanpeteghem</a></p>
 			<p class="text-center">creator of snookview</p>
 			<span>&nbsp;&nbsp;</span>
 			<ul class="text-center">
