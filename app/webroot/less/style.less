@@ -112,7 +112,6 @@ body
     margin: 0 auto -60px;
     /*End == code for the sticky footer*/
 }
-
 	//===BEGIN HEADER===//
 	.navbar-header {
 		&.home{
@@ -150,7 +149,10 @@ body
 			}
 			/*override of bootstrap*/
 			.navbar-collapse{
-				/*padding: 0px;*/
+				border-color: transparent;
+				&.in{
+					overflow-y: visible;
+				}
 			}
 			/*end override of bootstrap*/
 			/*override of bootstrap*/
@@ -200,7 +202,8 @@ body
 				}
 			}
 			.navbar-brand,
-			.navbar-nav > li > a{
+			.navbar-nav > li > a,
+			.navbar-nav > li > span{
 				/*override of bootstrap*/
 				/*padding: 0px;
 				padding-left: 20px;*/
@@ -210,6 +213,13 @@ body
 				text-transform: uppercase;
 				font-family: 'corbelregular';
 				display: inline-block;
+			}
+			.navbar-nav > li > span{
+				padding-top: 15px;
+				padding-bottom: 15px;
+				&.back-gv{
+					text-transform: lowercase;
+				}
 			}
 			.navbar-nav > li > ul{
 				/*display: none;
@@ -1109,6 +1119,14 @@ body
 			.navbar-brand{
 				&.home{
 					font-size: @brand;
+				}
+			}
+			.nav-gv > li > a{
+				padding: 10px 15px;
+			}
+			.nav-gv > li {
+				&.current-user-gv{
+					padding-left: 15px;
 				}
 			}
 		}

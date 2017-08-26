@@ -9,8 +9,8 @@
 		<span class="icon-bar"></span>
 	</button>
 </div>
-<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-	<ul class="nav navbar-nav <?php echo $location; ?>">
+<div class="collapse navbar-collapse navbar-collapse-gv" id="bs-example-navbar-collapse-1">
+	<ul class="nav navbar-nav nav-gv <?php echo $location; ?>">
 		<!-- <li class="<?php //echo (!empty($this->params['controller']) && ($this->params['controller']=='about') )?'activeNav' :'inactive' ?>">
 			<?php /*echo $this->Html->link(
 				__('About'), array(
@@ -73,7 +73,7 @@
 			?>
 		</li>
 		<?php if ($logged_in): ?>
-			<li role="presentation" class="dropdown">
+			<li role="presentation" class="dropdown current-user-gv">
 				<?php if(!empty($current_user['user_image'])):{
 					echo $this->Html->image(h($current_user['user_image']), array('class' => 'thumb'));
 				} ?>
@@ -81,9 +81,7 @@
 					echo $this->Html->image('/img/users/profile.jpg', array('class' => 'thumb'));
 				 }
 				endif; ?>
-				<?php echo $this->Html->link($current_user['user_username'], array('controller' => 'users', 'action' => 'profile', $current_user['user_id']), array('aria-expanded' => 'false', "role" => "button", "aria-haspopup"=> "true")
-					);
-				?>
+				<span><?php echo $current_user['user_username']; ?></span>
 				<ul class="dropdown-menu">
 					<?php if($current_user['user_id'] == 1 && $current_user['user_role'] == 'admin'): ?>
 						<li role="presentation" class="dropdown text-center">
