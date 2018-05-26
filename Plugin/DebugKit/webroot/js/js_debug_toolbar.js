@@ -5,7 +5,6 @@
  * and enhancing the Html toolbar. Includes library agnostic Event, Element,
  * Cookie and Request wrappers.
  *
- *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
@@ -836,11 +835,9 @@ DEBUGKIT.historyPanel = function () {
 
 	// Private method to handle restoration to current request.
 	var restoreCurrentState = function () {
-		var id, i, panelContent, tag;
-
 		historyLinks.removeClass('loading');
 
-		$.each(toolbar.panels, function (panel, id) {
+		$.each(toolbar.panels, function (i, panel) {
 			if (panel.content === undefined) {
 				return;
 			}

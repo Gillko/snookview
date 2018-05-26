@@ -26,7 +26,7 @@ class UsersController extends AppController {
 		//ALL THE BEFORE SETTINGS FROM THE APPCONTROLLER.PHP FILE
 		parent::beforeFilter();
 		//ADDITIONAL SETTINGS FOR JUST THE USERCONTROLLER
-		$this->Auth->allow('register', 'password', 'reset', 'captcha');
+		//$this->Auth->allow('register', 'password', 'reset', 'captcha');
 	}
 
 	/*public function isAuthorized($user){

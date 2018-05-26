@@ -33,12 +33,8 @@
 			?>
 		</fieldset>
 		<?php echo $this->Html->div('unforseen-container'); ?>
-			<?php echo $this->Html->div('unforseen'); ?>
-				<?php echo $this->Html->link(__('Not a member? Register here!'), array('controller' => 'users', 'action' => 'register'), array('class' => 'not-member-yet')); ?>
-			<?php echo '</div>'; ?>
 			<?php echo $this->Form->end(array('label' => __('Login', true), 'class' => 'btn btn-default btn-success btn-lg btn-login')); ?>
 			<?php echo $this->Html->div('unforseen'); ?>
-			<?php echo $this->Html->link(__('Forgot Password?', true), array('controller' => 'users', 'action' => 'password'), array('class' => 'forgot-password')); ?>
 			<?php echo '</div>'; ?>
 		<?php echo '</div>'; ?>
 	</div>
