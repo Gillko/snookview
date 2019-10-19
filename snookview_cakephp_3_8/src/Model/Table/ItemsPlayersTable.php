@@ -1,0 +1,25 @@
+<?php
+
+namespace App\Model\Table;
+
+use Cake\ORM\Table;
+
+class ItemsPlayersTable extends Table
+{
+	public function initialize(array $config)
+    {
+
+    	$this->setDisplayField('item_id');
+    	$this->setDisplayField('player_id');
+
+    	$this->belongsTo('Items', [
+    		'foreignKey'	=> 'item_id',
+    		'joinType'		=> 'INNER'
+     	]);
+
+     	$this->belongsTo('Players', [
+    		'foreignKey' 	=> 'player_id',
+    		'joinType'		=> 'INNER'
+     	]);
+	}
+}
