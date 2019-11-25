@@ -34,7 +34,7 @@
 				<?php foreach ($seasons as $season): ?>
 					<tr>
 						<td>
-							<?php echo $this->Html->link($season->season_id, ['action' => 'view', $season->season_id]); ?>
+							<?php echo $this->Html->link($season->season_id, ['action' => 'adminView', $season->season_id]); ?>
 						</td>
 						<td>
 							<?php echo h($season->season_beginYear); ?>
@@ -45,17 +45,14 @@
 						<td class="actions">
 							<?php echo $this->Html->link(
 								$this->Html->tag('i', '', ['class' => 'glyphicon glyphicon-edit']),
-									['action' => 'edit', $season->season_id],
+									['action' => 'adminEdit', $season->season_id],
 									['class' => 'btn btn-mini btn-noPadding', 'escape' => false]
 								); 
 							?>
-							<?php echo $this->Form->postLink(
-								$this->Html->tag('i', '', ['class' => 'glyphicon glyphicon-remove']),
-									['action' => 'delete', $season->season_id],
-									['class' => 'btn btn-mini btn-noPadding', 'escape'=>false],
-									__('Are you sure you want to delete %s?', $season->season_beginYear)
-								);
-							?>
+							<?php echo $this->element('deleteAction', array(
+								"idDeleteAction" 		=> $season->season_id,
+								"displayDeleteAction" 	=> $season->season_beginYear . '-' . $season->season_endYear
+							)); ?>
 						</td>
 					</tr>
 				<?php endforeach; ?>

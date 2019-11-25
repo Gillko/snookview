@@ -31,9 +31,13 @@
 									?>
 									
 
-									<a href="../../videos/<?php echo $video->video_id; ?>/<?php echo $video->video_slug; ?>">
+
+
+
+
+									<a href="<?php WWW_ROOT ?>/videos/<?php echo $video->video_id; ?>/<?php echo $video->video_slug; ?>">
 									<!-- <a href='/videos/<?php //echo $video['video_slug']; ?>'> -->
-										<?php if($tournament['tournament_winner']) echo $this->Html->image($tournament['tournament_winner'], array('class' => 'img-responsive noPadding', 'alt' => $tournament['tournament_name'] . ' ' . $tournament['tournament_year'])); ?>
+										<?php if($tournament['tournament_winner']) echo $this->Html->image('/img/winners/' . $tournament['tournament_winner'], array('class' => 'img-responsive noPadding', 'alt' => $tournament['tournament_name'] . ' ' . $tournament['tournament_year'])); ?>
 										<ul class="videos final">
 											<?php foreach ($video->players as $player): ?>
 												<li><?php echo $player['player_firstname'] . ' ' . $player['player_surname']; ?></li>
@@ -57,7 +61,7 @@
 										<div class="row">
 											<?php foreach ($video->players as $player): ?>
 											<div class="col-md-6">
-												<?php if($player['player_image']) echo $this->Html->image($player['player_image'], array('class' => 'img-responsive thumbMiddleLargeScreen', 'alt' => $player['player_firstname'] . ' ' . $player['player_surname'])); ?>
+												<?php if($player['player_image']) echo $this->Html->image('/img/players/' . $player['player_image'], array('class' => 'img-responsive thumbMiddleLargeScreen', 'alt' => $player['player_firstname'] . ' ' . $player['player_surname'])); ?>
 											</div>
 											<?php endforeach; ?>
 										</div>
@@ -360,7 +364,7 @@ ul{
 									<div class="box text-center">
 										<a href="../../videos/<?php echo $video->video_id; ?>/<?php echo $video->video_slug; ?>">
 										<!-- <a href='/videos/<?php //echo $video['video_slug']; ?>'> -->
-											<?php if($tournament['tournament_winner']) echo $this->Html->image($tournament['tournament_winner'], array('class' => 'img-responsive noPadding', 'alt' => $tournament['tournament_name'] . ' ' . $tournament['tournament_year'])); ?>
+											<?php if($tournament['tournament_winner']) echo $this->Html->image('/img/winners/' . $tournament['tournament_winner'], array('class' => 'img-responsive noPadding', 'alt' => $tournament['tournament_name'] . ' ' . $tournament['tournament_year'])); ?>
 											<ul class="videos final">
 												<?php foreach ($video->players as $player): ?>
 													<li><?php echo $player['player_firstname'] . ' ' . $player['player_surname']; ?></li>
@@ -385,7 +389,7 @@ ul{
 											<div class="row">
 												<?php foreach ($video->players as $player): ?>
 												<div class="col-md-6">
-													<?php if($player['player_image']) echo $this->Html->image($player['player_image'], array('class' => 'img-responsive thumbMiddleLargeScreen', 'alt' => $player['player_firstname'] . ' ' . $player['player_surname'])); ?>
+													<?php if($player['player_image']) echo $this->Html->image('/img/players/' . $player['player_image'], array('class' => 'img-responsive thumbMiddleLargeScreen', 'alt' => $player['player_firstname'] . ' ' . $player['player_surname'])); ?>
 												</div>
 												<?php endforeach; ?>
 											</div>
@@ -508,7 +512,7 @@ ul{
 								<div class="box text-center">
 									<a href="../../videos/<?php echo $video->video_id; ?>/<?php echo $video->video_slug; ?>">
 									<!-- <a href='/videos/<?php //echo $video['video_slug']; ?>'> -->
-										<?php if($tournament['tournament_winner']) echo $this->Html->image($tournament['tournament_winner'], array('class' => 'img-responsive noPadding', 'alt' => $tournament['tournament_name'] . ' ' . $tournament['tournament_year'])); ?>
+										<?php if($tournament['tournament_winner']) echo $this->Html->image('/img/winners/' . $tournament['tournament_winner'], array('class' => 'img-responsive noPadding', 'alt' => $tournament['tournament_name'] . ' ' . $tournament['tournament_year'])); ?>
 										<ul class="videos final">
 											<?php foreach ($video->players as $player): ?>
 												<li><?php echo $player['player_firstname'] . ' ' . $player['player_surname']; ?></li>
@@ -532,7 +536,7 @@ ul{
 										<div class="row">
 											<?php foreach ($video->players as $player): ?>
 											<div class="col-md-6">
-												<?php if($player['player_image']) echo $this->Html->image($player['player_image'], array('class' => 'img-responsive thumbMiddleLargeScreen', 'alt' => $player['player_firstname'] . ' ' . $player['player_surname'])); ?>
+												<?php if($player['player_image']) echo $this->Html->image('/img/players/' . $player['player_image'], array('class' => 'img-responsive thumbMiddleLargeScreen', 'alt' => $player['player_firstname'] . ' ' . $player['player_surname'])); ?>
 											</div>
 											<?php endforeach; ?>
 										</div>

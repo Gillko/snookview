@@ -17,7 +17,6 @@
 				<?php
 					echo $this->Form->control('season_beginYear', [
 						'type' => 'year',
-						
 						'minYear' => date('Y')-100, 
 						'maxYear' => date('Y')-0+1, 
 						'label' => 'Begin Year',
@@ -31,7 +30,6 @@
 				<?php
 					echo $this->Form->control('season_endYear', [
 						'type' => 'year',
-						
 						'minYear' => date('Y')-100, 
 						'maxYear' => date('Y')-0+1, 
 						'label' => 'End Year',

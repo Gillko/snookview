@@ -33,7 +33,7 @@
 					<tr>
 						<td>
 							<?php echo $this->Html->link(
-								$round->round_id, ['action' => 'view', $round->round_id]); 
+								$round->round_id, ['action' => 'adminView', $round->round_id]); 
 							?>&nbsp;
 						</td>
 						<td>
@@ -48,12 +48,15 @@
 						</td>
 						<td class="actions">
 							<?php echo $this->Html->link(
-								$this->Html->tag('i', '', ['class' => 'glyphicon glyphicon-edit']) . "", ['action' => 'edit', $round->round_id], ['class' => 'btn btn-mini btn-noPadding', 'escape' => false]); 
+								$this->Html->tag('i', '', 
+								['class' => 'glyphicon glyphicon-edit']) . "", 
+								['action' => 'adminEdit', $round->round_id], 
+								['class' => 'btn btn-mini btn-noPadding', 'escape' => false]); 
 							?>
-							
-							<?php echo $this->Form->postLink(
-								$this->Html->tag('i', '', ['class' => 'glyphicon glyphicon-remove']). "", ['action' => 'delete', $round->round_id], ['escape' => false], __('Are you sure you want to delete %s?', $round->round_name), ['class' => 'btn btn-mini btn-noPadding']);
-							?>
+							<?php echo $this->element('deleteAction', array(
+								"idDeleteAction" 		=> $round->round_id,
+								"displayDeleteAction" 	=> $round->round_name
+							)); ?>
 						</td>
 					</tr>
 				<?php endforeach; ?>

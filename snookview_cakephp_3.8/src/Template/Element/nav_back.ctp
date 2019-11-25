@@ -55,19 +55,19 @@
 						)
 					);
 				?>
-			<li>
-		<?php //endif; ?>
-		<li><?php echo $this->Html->link(__('Users'), array('controller' => 'users', 'action' => 'adminIndex', 'admin' => true)); ?></li>
-		<li><?php echo $this->Html->link(__('Comments'), array('controller' => 'comments', 'action' => 'adminIndex', 'admin' => true)); ?></li>
-		<li><?php echo $this->Html->link(__('Rounds'), array('controller' => 'rounds', 'action' => 'adminIndex', 'admin' => true)); ?></li>
-		<li><?php echo $this->Html->link(__('Tournaments'), array('controller' => 'tournaments', 'action' => 'adminIndex', 'admin' => true)); ?></li>
-		<li><?php echo $this->Html->link(__('Timelines'), array('controller' => 'timelines', 'action' => 'adminIndex', 'admin' => true)); ?></li>
-		<li><?php echo $this->Html->link(__('Videos'), array('controller' => 'videos', 'action' => 'adminIndex', 'admin' => true)); ?></li>
-		<li><?php echo $this->Html->link(__('Items'), array('controller' => 'items', 'action' => 'adminIndex', 'admin' => true)); ?></li>
-		<li><?php echo $this->Html->link(__('Favorites'), array('controller' => 'favorites', 'action' => 'adminIndex', 'admin' => true)); ?></li>
-		<li><?php echo $this->Html->link(__('Players'), array('controller' => 'players', 'action' => 'adminIndex', 'admin' => true)); ?></li>
-		<li><?php echo $this->Html->link(__('Seasons'), array('controller' => 'seasons', 'action' => 'adminIndex', 'admin' => true)); ?></li>
-		<li><?php echo $this->Html->link(__('Sessions'), array('controller' => 'sessions', 'action' => 'adminIndex', 'admin' => true)); ?></li>
-		<li><?php echo $this->Html->link(__('Rankings'), array('controller' => 'rankings', 'action' => 'adminIndex', 'admin' => true)); ?></li>
+			</li>
+		<?php //endif; ?>		
+		<li><?php echo $this->Html->link(__('Users'			), ['controller' => 'users'			, 'action' => 'adminIndex']); ?></li>
+		<li><?php echo $this->Html->link(__('Comments'		), ['controller' => 'comments'		, 'action' => 'adminIndex']); ?></li>
+		<li><?php echo $this->Html->link(__('Rounds'		), ['controller' => 'rounds'		, 'action' => 'adminIndex']); ?></li>
+		<li><?php echo $this->Html->link(__('Tournaments'	), ['controller' => 'tournaments'	, 'action' => 'adminIndex']); ?></li>
+		<li><?php echo $this->Html->link(__('Timelines'		), ['controller' => 'timelines'		, 'action' => 'adminIndex']); ?></li>
+		<li><?php echo $this->Html->link(__('Videos'		), ['controller' => 'videos'		, 'action' => 'adminIndex']); ?></li>
+		<li><?php echo $this->Html->link(__('Items'			), ['controller' => 'items'			, 'action' => 'adminIndex']); ?></li>
+		<li><?php echo $this->Html->link(__('Favorites'		), ['controller' => 'favorites'		, 'action' => 'adminIndex']); ?></li>
+		<li><?php echo $this->Html->link(__('Players'		), ['controller' => 'players'		, 'action' => 'adminIndex']); ?></li>
+		<li><?php echo $this->Html->link(__('Seasons'		), ['controller' => 'seasons'		, 'action' => 'adminIndex']); ?></li>
+		<li><?php echo $this->Html->link(__('Sessions'		), ['controller' => 'sessions'		, 'action' => 'adminIndex']); ?></li>
+		<li><?php echo $this->Html->link(__('Rankings'		), ['controller' => 'rankings'		, 'action' => 'adminIndex']); ?></li>
 	</ul>
 </div>

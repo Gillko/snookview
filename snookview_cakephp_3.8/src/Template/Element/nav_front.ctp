@@ -64,14 +64,14 @@
 				);
 			?>
 		</li>
-		<li class="<?php echo (!empty($this->params->controller) && ($this->params->controller == 'Contact') )?'activeNav' :'inactive' ?>">
-			<?php echo $this->Html->link(
+		<!-- <li class="<?php //echo (!empty($this->params->controller) && ($this->params->controller == 'Contact') )?'activeNav' :'inactive' ?>">
+			<?php /*echo $this->Html->link(
 				__('Contact'), array(
 					'controller' => 'contact', 'action' => 'index'
 					)
-				);
+				);*/
 			?>
-		</li>
+		</li> -->
 		<?php //if ($logged_in): ?>
 			<li role="presentation" class="dropdown current-user-gv">
 				<?php if(!empty($current_user['user_image'])):{

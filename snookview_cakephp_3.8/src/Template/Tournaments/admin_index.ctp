@@ -45,7 +45,7 @@
 				<tr>
 					<td>
 						<?php echo $this->Html->link(
-							$tournament->tournament_id, ['action' => 'view', $tournament->tournament_id]); 
+							$tournament->tournament_id, ['action' => 'adminView', $tournament->tournament_id]); 
 						?>
 					</td>
 					<td>
@@ -64,22 +64,20 @@
 						<?php echo h(date("d-m-Y", strtotime($tournament->tournament_endDate))); ?>
 					</td>
 					<td>
-						<?php echo $this->Html->image(h($tournament->tournament_winner), ['class' => 'thumb']); ?>
+						<?php echo $this->Html->image('/img/winners/' . $tournament->tournament_winner, ['class' => 'thumb']); ?>
 					</td>
 					<td class="actions">
 						<?php echo $this->Html->link(
-							$this->Html->tag('i', '', ['class' => 'glyphicon glyphicon-edit']) . "",
-								['action' => 'edit', $tournament->tournament_id],
+							$this->Html->tag('i', '', 
+								['class' => 'glyphicon glyphicon-edit']) . "",
+								['action' => 'adminEdit', $tournament->tournament_id],
 								['class' => 'btn btn-mini btn-noPadding', 'escape' => false]
 							);
 						?>
-						<?php echo $this->Form->postLink(
-							$this->Html->tag('i', '', ['class' => 'glyphicon glyphicon-remove']). "",
-								['action' => 'delete', $tournament->tournament_id],
-								['escape'=>false],
-								__('Are you sure you want to delete %s?', $tournament->tournament_name), ['class' => 'btn btn-mini btn-noPadding']
-							);
-						?>
+						<?php echo $this->element('deleteAction', array(
+							"idDeleteAction" 		=> $tournament->tournament_id,
+							"displayDeleteAction" 	=> $tournament->tournament_name . ' ' . $tournament->tournament_year
+						)); ?>
 					</td>
 				</tr>
 				<?php endforeach; ?>

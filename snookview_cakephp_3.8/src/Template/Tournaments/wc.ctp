@@ -10,8 +10,10 @@
 			<?php foreach ($tournaments as $tournament): ?>
 				<div class="col-md-3 noPaddingTablet noPaddingMobile text-center">
 					<div class="box">
-						<?php if($tournament['tournament_winner']) echo $this->Html->link($this->Html->image(h($tournament['tournament_winner']), array('class' => 'img-responsive', 'alt' => $tournament['tournament_name'] . ' ' . $tournament['tournament_year'])), array('controller' => 'tournaments', 'action' => 'view', $tournament['tournament_id']),
-					    array('escape' => false)); ?>
+						<a href="<?php WWW_ROOT ?>/tournaments/<?php echo $tournament->tournament_id; ?>/<?php echo $tournament->tournament_slug; ?>">
+							<?php if($tournament['tournament_winner']) echo $this->Html->image('/img/winners/' . $tournament['tournament_winner'], array('class' => 'img-responsive', 'alt' => $tournament['tournament_name'] . ' ' . $tournament['tournament_year'])); ?>
+						</a>
+						<?php //if($tournament['tournament_winner']) echo $this->Html->link($this->Html->image('../' . $tournament['tournament_winner'], array('class' => 'img-responsive', 'alt' => $tournament['tournament_name'] . ' ' . $tournament['tournament_year'])), array('controller' => 'tournaments', 'action' => 'view', $tournament['tournament_id']), array('escape' => false)); ?>
 						<p class="source"><?php echo $this->Html->link('Image src', $tournament['tournament_winnerSrc'], array('target' => '_blank')); ?></p>
 						<h4><?php echo $this->Html->link(__($tournament['tournament_year']), array('controller' => 'tournaments', 'action' => 'view', $tournament['tournament_id'])); ?></h4>
 						<span>&nbsp;</span>

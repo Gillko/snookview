@@ -19,91 +19,59 @@ class FavoritesController extends AppController {
             'Favorites.favorite_id' => 'asc'
         ]
     ];
+     /*Pagination*/
 
-    public function initialize()
-    {
+    public function initialize() {
         parent::initialize();
         $this->loadComponent('Paginator');
     }
-    /*Pagination*/
 
 	public function beforeFilter(Event $event) {
 		$this->Auth->allow(
 			[
-				'adminAdd',
-				'adminIndex'
+				/*'adminAdd',
+				'adminEdit',
+				'adminIndex',
+				'adminView',
+				'adminDelete'*/
 			]
 		);
 	}
 
-/**
- * index method
- *
- * @return void
- */
-	public function index() {
+	/**
+	 * index method
+	 *
+	 * @return void
+	 */
+	/*public function index() {
 		$this->layout = 'layout_front';
 		$this->Favorite->recursive = 0;
 		$this->set('favorites', $this->Paginator->paginate());
 
 		$current_user = $this->Auth->user('user_id');
 
-		$options['joins'] = array(
-		    array('table' => 'favorites',
+		$options['joins'] = [
+		    [
+		    	'table' => 'favorites',
 		        'alias' => 'Favorite',
 		        'type' => 'inner',
-		        'conditions' => array(
+		        'conditions' => [
 		            'Video.video_id = Favorite.video_id',
 		            'Favorite.user_id' => $current_user
-		        )
-		    ),
-		);
+		        ]
+		    ],
+		];
 
 		$videos = $this->Favorite->Video->find('all', $options);
 		$this->set(compact('videos'));
-	}
+	}*/
 
-/**
- * delete method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
-	public function delete($id = null) {
-		$this->Favorite->id = $id;
-		if (!$this->Favorite->exists()) {
-			throw new NotFoundException(__('Invalid favorite'));
-		}
-		$this->request->onlyAllow('post', 'delete');
-		if ($this->Favorite->delete()) {
-			$this->Session->setFlash(__('Your favorite has been deleted.'));
-		} else {
-			$this->Session->setFlash(__('Your favorite could not be deleted. Please, try again.'));
-		}
-		return $this->redirect(array('action' => 'index'));
-	}
-
-
-/**
- * admin_index method
- *
- * @return void
- */
+	/**
+	 * admin_index method
+	 *
+	 * @return void
+	 */
 	public function adminIndex() {
-		/*$this->layout = 'layout_back';
-		$this->Favorite->recursive = 0;
-		$this->set('favorites', $this->Paginator->paginate());
-
-		$this->layout = 'layout_back';
-		$this->Favorite->recursive = 1;
-
-		$this->paginate = array( 
-	        'order' => array('Favorite.favorite_id' => 'DESC')
-	    );
-
-	    $this->set('favorites', $this->Paginator->paginate());*/
-
 	    $this->viewBuilder()->setLayout('layout_back');
 	    $favorites = $this->paginate($this->Favorites, [
 	    	'contain' => [
@@ -113,32 +81,39 @@ class FavoritesController extends AppController {
 	    ]);
         $this->set(
         	compact(
-        		'favorites'
+        		'favorites',
+        		'users',
+        		'videos'
         	)
         );
 	}
 
-/**
- * admin_view method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
-	public function admin_view($id = null) {
-		$this->layout = 'layout_back';
-		if (!$this->Favorite->exists($id)) {
+	/**
+	 * admin_view method
+	 *
+	 * @throws NotFoundException
+	 * @param string $id
+	 * @return void
+	 */
+	public function adminView($id = null) {
+		$this->viewBuilder()->setLayout('layout_back');
+		if (!$this->Favorites->exists($id)) {
 			throw new NotFoundException(__('Invalid favorite'));
 		}
-		$options = array('conditions' => array('Favorite.' . $this->Favorite->primaryKey => $id));
-		$this->set('favorite', $this->Favorite->find('first', $options));
+		$favorite = $this->Favorites->get($id, [
+			'contain' => [
+				'Users',
+				'Videos'
+			]
+		]);
+        $this->set(compact('favorite'));
 	}
 
-/**
- * admin_add method
- *
- * @return void
- */
+	/**
+	 * admin_add method
+	 *
+	 * @return void
+	 */
 	public function adminAdd() {
 		$this->viewBuilder()->setLayout('layout_back');
 
@@ -178,52 +153,69 @@ class FavoritesController extends AppController {
         $this->set('favorite', $favorite);
 	}
 
-/**
- * admin_edit method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
-	public function admin_edit($id = null) {
-		$this->layout = 'layout_back';
-		if (!$this->Favorite->exists($id)) {
-			throw new NotFoundException(__('Invalid favorite'));
-		}
-		if ($this->request->is(array('post', 'put'))) {
-			if ($this->Favorite->save($this->request->data)) {
-				$this->Session->setFlash(__('The favorite has been saved.'));
-				return $this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The favorite could not be saved. Please, try again.'));
-			}
-		} else {
-			$options = array('conditions' => array('Favorite.' . $this->Favorite->primaryKey => $id));
-			$this->request->data = $this->Favorite->find('first', $options);
-		}
-		$users = $this->Favorite->User->find('list');
-		$videos = $this->Favorite->Video->find('list');
-		$this->set(compact('users', 'videos'));
+	/**
+	 * admin_edit method
+	 *
+	 * @throws NotFoundException
+	 * @param string $id
+	 * @return void
+	 */
+	public function adminEdit($id = null) {
+		$this->viewBuilder()->setLayout('layout_back');
+
+        $favorite = $this->Favorites->get($id);
+
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $favorite = $this->Favorites->patchEntity($favorite, $this->request->data);
+            if ($this->Favorites->save($favorite)) {
+                $this->Flash->success(__('The favorite has been updated.'));
+                return $this->redirect(['action' => 'adminIndex']);
+            } else {
+                $this->Flash->error(__('The favorite could not be updated. Please, try again.'));
+            }
+        }
+        $this->set(compact('favorite'));
+
+        $videos 
+		= $this->Favorites->Videos->find(
+			'list', [
+				'valueField' => 'video_title',
+				'order' => [
+					'Videos.video_id' => 'desc'
+				]
+			]
+		);
+
+		$users 
+		= $this->Favorites->Users->find(
+			'list', [
+				'valueField' => 'user_username'
+			]
+		);
+		
+		$this->set(
+			compact(
+				'favorites',
+				'videos',
+				'users'
+			)
+		);
 	}
 
-/**
- * admin_delete method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
-	public function admin_delete($id = null) {
-		$this->Favorite->id = $id;
-		if (!$this->Favorite->exists()) {
-			throw new NotFoundException(__('Invalid favorite'));
+	/**
+	 * admin_delete method
+	 *
+	 * @throws NotFoundException
+	 * @param string $id
+	 * @return void
+	 */
+	public function adminDelete($id) {
+		$this->request->allowMethod(['post', 'delete']);
+
+		$favorite = $this->Favorites->get($id);
+		if ($this->Favorites->delete($favorite)) {
+			$this->Flash->success(__('The favorite with id: {0} has been deleted.', h($id)));
+			return $this->redirect(['action' => 'adminIndex']);
 		}
-		$this->request->onlyAllow('post', 'delete');
-		if ($this->Favorite->delete()) {
-			$this->Session->setFlash(__('The favorite has been deleted.'));
-		} else {
-			$this->Session->setFlash(__('The favorite could not be deleted. Please, try again.'));
-		}
-		return $this->redirect(array('action' => 'index'));
 	}
 }

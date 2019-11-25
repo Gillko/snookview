@@ -40,7 +40,7 @@
 				<?php foreach ($rankings as $ranking): ?>
 					<tr>
 						<td>
-							<?php echo $this->Html->link($ranking->ranking_id, ['action' => 'view', $ranking->ranking_id]); ?>
+							<?php echo $this->Html->link($ranking->ranking_id, ['action' => 'adminView', $ranking->ranking_id]); ?>
 						</td>
 						<td>
 							<?php echo h($ranking->ranking_rank); ?>
@@ -49,10 +49,7 @@
 							<?php echo h($ranking->ranking_points); ?>
 						</td>
 						<td>
-							<a href="../../players/<?php echo $ranking->player->player_id; ?>/<?php echo $ranking->player->player_slug; ?>">
-								<?php echo $ranking->player->player_firstname . ' ' . $ranking->player->player_surname ?>
-							</a>
-							<?php //echo $this->Html->link($ranking->player->player_firstname . ' ' . $ranking->player->player_surname , ['controller' => 'players', 'action' => 'view', $ranking->player->player_id]); ?>
+							<?php echo $this->Html->link($ranking->player->player_firstname . ' ' . $ranking->player->player_surname , ['controller' => 'players', 'action' => 'adminView', $ranking->player->player_id]); ?>
 						</td>
 						<td>
 							<?php echo $this->Html->link($ranking->season->season_beginYear . '-' . $ranking->season->season_endYear, ['controller' => 'seasons', 'action' => 'view', $ranking->season->season_id]); ?>
@@ -60,18 +57,14 @@
 						<td class="actions">
 							<?php echo $this->Html->link(
 								$this->Html->tag('i', '', ['class' => 'glyphicon glyphicon-edit']) . "",
-									['action' => 'edit', $ranking->ranking_id],
+									['action' => 'adminEdit', $ranking->ranking_id],
 									['class' => 'btn btn-mini btn-noPadding', 'escape' => false]
 								); 
 							?>
-							<?php echo $this->Form->postLink(
-								$this->Html->tag('i', '', ['class' => 'glyphicon glyphicon-remove']). "",
-									['action' => 'delete', $ranking->ranking_id],
-									['escape'=>false],
-									__('Are you sure you want to delete %s?', $ranking->ranking_points),
-									['class' => 'btn btn-mini btn-noPadding']
-								);
-							?>
+							<?php echo $this->element('deleteAction', array(
+								"idDeleteAction" 		=> $ranking->ranking_id,
+								"displayDeleteAction" 	=> $ranking->player->player_firstname . ' ' . $ranking->player->player_surname . ' with the points of ' . $ranking->ranking_points
+							)); ?>
 						</td>
 					</tr>
 				<?php endforeach; ?>

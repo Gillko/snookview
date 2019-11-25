@@ -1,5 +1,5 @@
 <div id="footer" class="navbar navbar-default text-center">
-	<p>SNOOKVIEW Copyright &#169; Gilles Vanpeteghem</p>
+	<p>SNOOKVIEW</p>
 	<div class="fb-share-button" data-href="http://snookview.be/" data-layout="button_count"></div>
 </div>
 <script>(function(d, s, id) {

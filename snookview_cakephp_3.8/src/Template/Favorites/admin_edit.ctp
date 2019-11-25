@@ -4,7 +4,22 @@
 <div class="row">
 	<div class="col-md-3">
 		<ul class="nav nav-pills nav-stacked">
-			<li><?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $this->Form->value('Favorite.favorite_id')), null, __('Are you sure you want to delete %s?', $this->Form->value('Favorite.favorite_id'))); ?></li>
+			<li>
+				<?= 
+					$this->Form->postLink(
+					    'Delete',[
+					    	'action' => 'delete', $favorite->favorite_id
+					    ],
+					    [
+					    	'confirm' => 'Are you sure?'
+					    ]
+					)
+				?>
+				<?php
+					echo $this->Form->end();
+				?>
+				<?php //echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $this->Form->value('Favorite.favorite_id')), null, __('Are you sure you want to delete %s?', $this->Form->value('Favorite.favorite_id'))); ?>
+			</li>
 		</ul>
 	</div>
 	<div class="col-md-9">
@@ -16,21 +31,32 @@
 		),
 			'class' => 'well'
 		)); ?>
-	<fieldset>
-		<legend><?php echo __('Edit Favorite'); ?></legend>
-	<?php
-		echo $this->Form->input('favorite_id');
-		echo $this->Form->input('user_id', array(
-			'label' => 'User',
-			'placeholder' => 'User',
-		));
-		echo $this->Form->input('video_id', array(
-			'label' => 'Video',
-			'placeholder' => 'Video',
-		));
-	?>
-	</fieldset>
-	<?php echo $this->Form->end(array('label' => __('Edit', true), 'class' => 'btn btn-default btn-success btn-lg')); ?>
+		<fieldset>
+			<legend><?php echo __('Edit Favorite'); ?></legend>
+			<div class="form-group">
+				<?php
+					echo $this->Form->control('user_id', array(
+						'class' => 'form-control',
+						'value' => $favorite->user_id
+					));
+				?>
+			</div>
+			<div class="form-group">
+				<?php
+					echo $this->Form->control('video_id', array(
+						'class' => 'form-control',
+						'value' => $favorite->video_id
+					));
+				?>
+			</div>
+			<div class="submit">
+				<?php
+					echo $this->Form->button(__('Edit'), ['class'=> 'btn btn-default btn-success btn-lg']);
+				?>
+			</div>
+			<?php
+				echo $this->Form->end();
+			?>
+		</fieldset>
 	</div>
 </div>
-

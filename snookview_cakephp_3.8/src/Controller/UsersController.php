@@ -8,10 +8,6 @@ use Cake\Auth\DefaultPasswordHasher;
 use Cake\Utility\Security;
 use Cake\ORM\TableRegistry;
 
-
-//App::uses('CakeEmail', 'Network/Email');
-//App::uses('Folder', 'Utility');
-//App::uses('File', 'Utility');
 /**
  * Users Controller
  *
@@ -19,219 +15,289 @@ use Cake\ORM\TableRegistry;
  */
 class UsersController extends AppController {
 
-	//public $uses = array('User');
-
-	//public $helpers = array('Html', 'Form', 'Captcha');
-
 	/*Pagination*/
 	public $paginate = [
-        'limit' => 25,
-        'order' => [
-            'Users.user_id' => 'asc'
-        ]
-    ];
+		'limit' => 25,
+		'order' => [
+			'Users.user_id' => 'asc'
+		]
+	];
+	/*Pagination*/
 
-    public function initialize()
-    {
-        parent::initialize();
-        $this->loadComponent('Paginator');
-    }
-    /*Pagination*/
-
-/**
- * Components
- *
- * @var array
- */
-	//public $components = array('Paginator', 'Email', 'Captcha'=>array('field'=>'security_code'));
-	public $components = array('Paginator', 'Email');
+	public function initialize()
+	{
+		parent::initialize();
+		$this->loadComponent('Paginator');
+	}
 
 	public function beforeFilter(Event $event) {
 		$this->Auth->allow(
 			[
-				'adminAdd',
 				'verify',
-				'adminIndex'
+				/*'adminAdd',
+				'adminEdit',
+				'adminIndex',
+				'adminView',
+				'adminDelete'*/
 			]
 		);
 	}
 
-	/*public function isAuthorized($user){
-		if($user['user_role'] == 'admin'){
-			return true;
-		}
-		if(in_array($this->action, array('admin_view', 'admin_edit', 'admin_delete', 'edit', 'delete', 'profile'))){
-			if($user['user_id'] != $this->request->params['pass']['0']){
-				return $this->Session->setFlash(__('Access denied'));
-			}
-		}
-		return true;
-	}*/
-
-	/*public function captcha()	{
-        $this->autoRender = false;
-        $this->layout='ajax';
-        if(!isset($this->Captcha))	{ //if you didn't load in the header
-            $this->Captcha = $this->Components->load('Captcha'); //load it
-        }
-        $this->Captcha->create();
-    }*/
-
-    /*public function admin_captcha()	{
-        $this->autoRender = false;
-        $this->layout='ajax';
-        if(!isset($this->Captcha))	{ //if you didn't load in the header
-            $this->Captcha = $this->Components->load('Captcha'); //load it
-        }
-        $this->Captcha->create();
-    }*/
-
-	/*public function verify(){
-		//check if the token is valid
-		if (!empty($this->passedArgs['n']) && !empty($this->passedArgs['t'])){
-			$name = $this->passedArgs['n'];
-			$tokenhash = $this->passedArgs['t'];
-			//$results = $this->User->findByUser_username($name);
-			$results = $this->User->find('first', array('conditions' => array('user_username' => $name)));
-			
-			//check if the user is already activated
-			if ($results['User']['user_activate'] != 1){
-				//check the token
-				if($results['User']['user_tokenhash'] == $tokenhash){
-					//Set activate to 1
-					$this->User->id = $results['User']['user_id'];
-					$this->User->saveField('user_activate', 1);
-					//$results['User']['user_activate'] = 1;
-					
-					//Save the data
-					//$this->User->save($results);
-					$this->Session->setFlash('Your registration is complete');
-					return $this->redirect(array('action' => 'login'));
-					exit;
-				} else{
-					$this->Session->setFlash('Your registration failed please try again');
-					return $this->redirect(array('action' => 'register'));
-				}
-			} else{
-				$this->Session->setFlash('This link will work only once and has already been used.');
-				return $this->redirect(array('action' => 'register'));
-			}
-		}
-	}*/
-
+	/**
+	 * login method
+	 *
+	 * @return void
+	 */
 	public function login(){
 		$this->viewBuilder()->setLayout('layout_front');
-		/*if ($this->request->is('post')){
-			if($this->Auth->login()){
-				$this->redirect($this->Auth->redirect());
-			} else {
-				$this->Session->setFlash(_('The email and/or password is incorrect'));
-			}
-		}*/
-		if (!empty($this->data)) {
-			if ($this->Auth->loggedIn()) {
-				$this->Session->setFlash('There is already a user logged in, he or she needs to logout first.');
-	            $this->redirect($this->Auth->redirect('login'));
+
+		if ($this->request->is('post')) {
+	        $user = $this->Auth->identify();
+	        if($user) {
+	            $this->Auth->setUser($user);
+	            
+	            return $this->redirect($this->Auth->redirectUrl());
+	        } else {
+	            $this->Flash->error(__('Your Username or password is incorrect'));
 	        }
-			if ($this->User->validates()) {
-				$this->User->data = $this->data;
-				$results = $this->User->findByEmail($this->data['User']['email']);
-				/*if email is in database*/
-				if($results){
-					/*check if account is activated*/
-					if ($results['User']['user_activate']==1){
-						/*when logged in*/
-						if ($this->Auth->login()) {
-							$this->Session->write('User', $results['User']);
-							//$this->lastLoginUser();
-							/*redirect*/
-							$this->redirect($this->Auth->redirect('/'));
-						}
-						/*when logging failed*/
-						else {
-							$this->Session->setFlash('Invalid Username or Password please try again');
-				  		}
-			  		}
-			  		/*when account isn't activated*/
-			  		else  {
-						$this->Session->setFlash('Your Email is not verified. Please verify and try again.');
-			  		}
-				}
-				/*if email isn't in database*/
-				else{
-					$this->Session->setFlash('Invalid Username or Password please try again');
-				}
-				
-			}
-		}
+	    }
 	}
 
-	protected function lastLoginUser(){
-        $this->User->id = $this->Auth->user('user_id');
-        $this->User->read();
-        $this->User->data['User']['user_lastlogin'] = date('Y-m-d H:i:s');
-        $this->User->save($this->User->data, false);
-    }
-
-	public function admin_login(){
-		$this->viewBuilder()->setLayout('layout_back');
-		if ($this->request->is('post')){
-			if($this->Auth->login()){
-				$this->redirect($this->Auth->redirect());
-			} else {
-				$this->Session->setFlash(_('The email and/or password is incorrect'));
-			}
-		}
-	}
-
+	/**
+	 * logout method
+	 *
+	 * @return void
+	 */
 	public function logout(){
-		$this->redirect($this->Auth->logout());
+		return $this->redirect($this->Auth->logout());
 	}
 
-	public function admin_logout(){
+	/**
+	 * admin_index method
+	 *
+	 * @return void
+	 */
+	public function adminIndex() {
 		$this->viewBuilder()->setLayout('layout_back');
-		$this->redirect($this->Auth->logout());
+
+		$users = $this->paginate($this->Users);
+
+		$this->set(
+			compact(
+				'users'
+			)
+		);
 	}
 
-/**
- * admin_index method
- *
- * @return void
- */
-	/*public function index() {
-		$this->layout = 'layout_front';
-		$this->User->recursive = 0;
-		$this->set('users', $this->Paginator->paginate());
-	}*/
+	/**
+	 * admin_view method
+	 *
+	 * @throws NotFoundException
+	 * @param string $id
+	 * @return void
+	 */
+	public function adminView($id = null) {
+		$this->viewBuilder()->setLayout('layout_back');
+		
+		if (!$this->Users->exists($id)) {
+			throw new NotFoundException(__('Invalid user'));
+		}
+		
+		$user = $this->Users->get($id);
+		
+		$this->set(
+			compact(
+				'user'
+			)
+		);
+	}
 
-/**
- * view method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
-	public function profile($id = null) {
+	/**
+	 * admin_add method
+	 *
+	 * @return void
+	 */
+	/* https://www.youtube.com/watch?v=JhUu7C1UW2U */
+	public function adminAdd() {
+		$this->viewBuilder()->setLayout('layout_back');
+
+		if($this->request->is('post')) {
+			$usersTable 			= TableRegistry::get('Users');
+			$user 					= $usersTable->newEntity();
+			$hasher 				= new DefaultPasswordHasher();
+			$user_firstname 		= $this->request->getData('user_firstname');
+			$user_lastname 			= $this->request->getData('user_lastname');
+			$user_country 			= $this->request->getData('user_country');
+			$user_username 			= $this->request->getData('user_username');
+			$user_email		 		= $this->request->getData('email');
+			$password 				= $this->request->getData('password');
+			$user_tokenhash 		= Security::hash(Security::randomBytes(32));
+			$user_role 				= $this->request->getData('user_role');
+			$user->user_firstname 	= $user_firstname;
+			$user->user_lastname 	= $user_lastname;
+			$user->user_country 	= $user_country;
+			$user->user_username 	= $user_username;
+			$user->email 			= $user_email;
+			$user->password 		= $hasher->hash($password);
+			$user->user_tokenhash 	= $user_tokenhash;
+			$user->user_role 		= $user_role;
+
+			$filename 				= $this->request->getData()['user_image']['name'];
+			$uploadpath 			= 'img/users/';
+			$uploadfile 			= $uploadpath . $filename;
+
+			if(move_uploaded_file($this->request->getData()['user_image']['tmp_name'], $filename)){
+				$user->user_image = $filename;
+
+				if($usersTable->save($user)) {
+					$this->Flash->success(__('The user has been saved, your confirmation email has been sent', ['id' => 'flashMessage']));
+					
+					$message = 'Click on the link below to complete registration ';
+					
+					$message .= 'http://localhost/users/verify/'.$user_tokenhash;
+					
+					$message = wordwrap($message, 70);
+					
+					$email = new Email('default');
+					
+					$email->emailFormat('html');
+					
+					$email->setFrom(['snookview147@gmail.com', 'snookview147@gmail.com']);
+					
+					$email->setTo($user_email);
+					
+					$email->setSubject('Confirm Registration for snookview.');
+					
+					$email->send($message);
+				} else{
+					$this->Flash->success(__('The user could not be saved. Please, try again.', ['id' => 'flashMessage']));
+				}
+			} else {
+				$this->Flash->success(__('The user could not be saved. Please, try again.', ['id' => 'flashMessage']));
+			}
+		}
+		$roles = [
+			'Admin' 		=> 'Admin', 
+			'User' 			=> 'User', 
+			'UserTimeline' 	=> 'UserTimeline'
+		];
+		
+		$this->set(
+			compact('roles')
+		);
+	}
+
+	public function verify($user_tokenhash){
+		$this->viewBuilder()->setLayout('layout_back');
+
+		$usersTable = TableRegistry::get('Users');
+		$verify = $usersTable->find('all')->where(['user_tokenhash'])->first();
+		$verify->user_activate = '1';
+		$usersTable->save($verify);
+	}
+
+	/**
+	 * admin_edit method
+	 *
+	 * @throws NotFoundException
+	 * @param string $id
+	 * @return void
+	 */
+	public function adminEdit($id = null) {
+		$this->viewBuilder()->setLayout('layout_back');
+
+		$user = $this->Users->get($id);
+
+		if ($this->request->is(['patch', 'post', 'put'])) {
+			$user = $this->Users->patchEntity($user, $this->request->data);
+			
+			$filename = $this->request->getData()['user_image']['name'];
+			
+			$uploadpath = 'img/users/';
+			
+			$uploadfile = $uploadpath . $filename;
+
+			if(move_uploaded_file($this->request->getData()['user_image']['tmp_name'], $uploadfile)){
+				$user->user_image = $uploadfile;
+			}
+			
+			if ($this->Users->save($user)){
+				$this->Flash->success(__('The user has been updated.'));
+				
+				return $this->redirect(['action' => 'adminIndex']);
+			} else {
+				$this->Flash->error(__('The user could not be updated. Please, try again.'));
+			}
+		}
+		$this->set(
+			compact(
+				'user'
+			)
+		);
+
+		$roles = [
+			'Admin' => 'Admin', 
+			'User' => 'User', 
+			'UserTimeline' => 'UserTimeline'
+		];
+
+		$this->set(
+			compact(
+				'roles'
+			)
+		);
+	}
+
+	/**
+	 * admin_delete method
+	 *
+	 * @throws NotFoundException
+	 * @param string $id
+	 * @return void
+	 */
+	public function adminDelete($id) {
+		$this->request->allowMethod(['post', 'delete']);
+
+		$user = $this->Users->get($id);
+		
+		if ($this->Users->delete($user)) {
+			$this->Flash->success(__('The user with id: {0} has been deleted.', h($id)));
+			
+			return $this->redirect(['action' => 'adminIndex']);
+		}
+	}
+
+	/**
+	 * profile method
+	 *
+	 * @throws NotFoundException
+	 * @param string $id
+	 * @return void
+	 */
+	/*public function profile($id = null) {
 		$this->viewBuilder()->setLayout('layout_front');
+
 		if (!$this->User->exists($id)) {
 			throw new NotFoundException(__('Invalid user'));
 		}
-		$options = array('conditions' => array('User.' . $this->User->primaryKey => $id));
+		
+		$options = ['conditions' => ['User.' . $this->User->primaryKey => $id]];
+		
 		$this->set('user', $this->User->find('first', $options));
-	}
+	}*/
 
-/**
- * add method
- *
- * @return void
- */
-	public function register() {
+	/**
+	 * register method
+	 *
+	 * @return void
+	 */
+	/*public function register() {
 		$this->viewBuilder()->setLayout('layout_front');
 
 		if(!empty($this->request->data)){
-        	$this->User->setCaptcha('security_code', $this->Captcha->getCode('User.security_code')); //getting from component and passing to model to make proper validation check
-        	$this->User->set($this->request->data);
-    	}
+			$this->User->setCaptcha('security_code', $this->Captcha->getCode('User.security_code')); //getting from component and passing to model to make proper validation check
+			$this->User->set($this->request->data);
+		}
 		if($this->request->is('post')) {
 			$this->User->create();
 			$hash = sha1($this->data['User']['user_username'].rand(0, 100));
@@ -262,13 +328,13 @@ class UsersController extends AppController {
 						</ul>';
 					$message = wordwrap($message, 70);
 					$Email = new CakeEmail();
-					$Email->from(array('snookview147@gmail.com', 'snookview147@gmail.com'))
+					$Email->from(['snookview147@gmail.com', 'snookview147@gmail.com'])
 					->emailFormat('html')
 					->to($this->data['User']['email'])
 					->subject('Confirm Registration for snookview.')
 					->send($message);
 					$this->Session->setFlash(__('Please Check your email for validation Link.'));
-					return $this->redirect(array('action' => 'login'));
+					return $this->redirect(['action' => 'login']);
 				} else {
 					$this->Session->setFlash(__('The user could not be saved. Please, try again.'));
 				}
@@ -276,21 +342,26 @@ class UsersController extends AppController {
 		}
 		//$people = $this->User->Person->find('list');
 		//$this->set(compact('people'));
-	}
+	}*/
 
-	public function password() {
+	/**
+	 * password method
+	 *
+	 * @return void
+	 */
+	/*public function password() {
 		$this->viewBuilder()->setLayout('layout_front');
 
 		$this->User->recursive = -1;
 
 		if($this->request->is('post')) {
 			$email = $this->data['User']['email'];
- 			$findUser = $this->User->find('first', array('conditions' => array('User.email' => $email)));
- 			if($findUser){
- 				if($findUser['User']['user_activate'] == 1){
+			$findUser = $this->User->find('first', ['conditions' => ['User.email' => $email]]);
+			if($findUser){
+				if($findUser['User']['user_activate'] == 1){
 					$key = Security::hash(String::uuid(),'sha512', true);
 					$hash = sha1($findUser['User']['user_username'].rand(0, 100));
-					$url = Router::url( array('controller'=>'users', 'action'=>'reset'), true ).'/'.$key.'#'.$hash;
+					$url = Router::url(['controller'=>'users', 'action'=>'reset'], true ).'/'.$key.'#'.$hash;
 					$message = '
 						<a href="http://www.snookview.be"><img src="http://www.snookview.be/img/snookview-logo.png"></a>
 						<br/>
@@ -320,7 +391,7 @@ class UsersController extends AppController {
 					$this->User->id = $findUser['User']['user_id'];
 					if($this->User->saveField('user_tokenhash_forgot_password', $findUser['User']['user_tokenhash_forgot_password'])){
 						$Email = new CakeEmail();
-						$Email->from(array('snookview147@gmail.com', 'snookview147@gmail.com'))
+						$Email->from(['snookview147@gmail.com', 'snookview147@gmail.com'])
 						->emailFormat('html')
 						->to($this->data['User']['email'])
 						->subject('Change password for snookview account.')
@@ -334,9 +405,14 @@ class UsersController extends AppController {
 				$this->Session->setFlash(__('This email doesn\'t exist.'));
 			} 
 		} 		
-	}
+	}*/
 
-	public function reset($token = null) {
+	/**
+	 * reset method
+	 *
+	 * @return void
+	 */
+	/*public function reset($token = null) {
 		$this->viewBuilder()->setLayout('layout_front');
 		$this->User->recursive = -1;
 		if(!empty($token)){
@@ -349,10 +425,10 @@ class UsersController extends AppController {
 					$new_hash = sha1($u['User']['user_username'] . rand(0, 100));//created token
 					$this->User->data['User']['user_tokenhash_forgot_password'] = $new_hash;
 
-					if($this->User->validates(array('fieldList' => array('user_password', 'password_confirm')))){
+					if($this->User->validates(['fieldList' => ['user_password', 'password_confirm']])){
 						if($this->User->save($this->User->data)){
 							$this->Session->setFlash('Password has been updated, you can login again.');
-							$this->redirect(array('controller' => 'users', 'action'=>'login'));
+							$this->redirect(['controller' => 'users', 'action'=>'login']);
 						}
 					} else{ 
 						$this->set('errors', $this->User->invalidFields());
@@ -360,48 +436,21 @@ class UsersController extends AppController {
 				}
 			} else{
 				$this->Session->setFlash('This link will work only once and has already been used. Please reset your password again by clicking on "Forgot Password?".');
-				$this->redirect(array('action' => 'login'));
+				$this->redirect(['action' => 'login']);
 			}
 		} else {
-			$this->redirect(array('action' => 'login'));
+			$this->redirect(['action' => 'login']);
 		}
-	}
+	}*/
 
-/**
- * edit method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
-	public function edit($id = null) {
-		$this->viewBuilder()->setLayout('layout_front');
-		if (!$this->User->exists($id)) {
-			throw new NotFoundException(__('Invalid user'));
-		}
-		if ($this->request->is(array('post', 'put'))) {
-			if ($this->User->save($this->request->data)) {
-				$this->Session->setFlash(__('Your account has been updated.'));
-				return $this->redirect(array('action' => 'edit', $id));
-			} else {
-				$this->Session->setFlash(__('Your account couldn\'t be updated. Please, try again.'));
-			}
-		} else {
-			$options = array('conditions' => array('User.' . $this->User->primaryKey => $id));
-			$this->request->data = $this->User->find('first', $options);
-		}
-		//$people = $this->User->Person->find('list');
-		//$this->set(compact('people'));
-	}
-
-/**
- * delete method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
-	public function delete($id = null) {
+	/**
+	 * delete account method
+	 *
+	 * @throws NotFoundException
+	 * @param string $id
+	 * @return void
+	 */
+	/*public function delete($id = null) {
 		$this->viewBuilder()->setLayout('layout_front');
 		$this->User->id = $id;
 		if (!$this->User->exists()) {
@@ -414,175 +463,6 @@ class UsersController extends AppController {
 		} else {
 			$this->Session->setFlash(__('You\'re account could not be deleted. Please, try again.'));
 		}
-		return $this->redirect(array('action' => 'login'));
-	}
-
-
-/**
- * admin_index method
- *
- * @return void
- */
-	public function adminIndex() {
-		/*$this->layout = 'layout_back';
-		$this->User->recursive = 0;
-		$this->set('users', $this->Paginator->paginate());*/
-
-		$this->viewBuilder()->setLayout('layout_back');
-		//$this->Users->recursive = 1;
-
-		/*$this->paginate = array( 
-	        'order' => array('Users.user_id' => 'DESC')
-	    );
-
-	    $this->set('users', $this->Paginator->paginate());*/
-
-
-	    $users = $this->paginate($this->Users);
-        $this->set(
-        	compact(
-        		'users'
-        	)
-        );
-	}
-
-/**
- * admin_view method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
-	public function admin_view($id = null) {
-		$this->viewBuilder()->setLayout('layout_back');
-		if (!$this->User->exists($id)) {
-			throw new NotFoundException(__('Invalid user'));
-		}
-		$options = array('conditions' => array('User.' . $this->User->primaryKey => $id));
-		$this->set('user', $this->User->find('first', $options));
-	}
-
-/**
- * admin_add method
- *
- * @return void
- */
-	/* https://www.youtube.com/watch?v=JhUu7C1UW2U */
-	public function adminAdd() {
-		$this->viewBuilder()->setLayout('layout_back');
-
-		if($this->request->is('post')) {
-			$usersTable = TableRegistry::get('Users');
-			$user = $usersTable->newEntity();
-			$hasher = new DefaultPasswordHasher();
-			$user_firstname = $this->request->getData('user_firstname');
-			$user_surname = $this->request->getData('user_surname');
-			$user_country = $this->request->getData('user_country');
-			$user_username = $this->request->getData('user_username');
-			$user_email = $this->request->getData('email');
-			$password = Security::hash($this->request->getData('password'), 'sha256', false);
-			$user_tokenhash = Security::hash(Security::randomBytes(32));
-			$user_role = $this->request->getData('user_role');
-			$user->user_firstname = $user_firstname;
-			$user->user_surname = $user_surname;
-			$user->user_country = $user_country;
-			$user->user_username = $user_username;
-			$user->email = $user_email;
-			$user->user_password = $hasher->hash($password);
-			$user->user_tokenhash = $user_tokenhash;
-			$user->user_role = $user_role;
-
-
-			$filename = $this->request->getData()['user_image']['name'];
-			$uploadpath = 'img/users/';
-			$uploadfile = $uploadpath . $filename;
-
-			if(move_uploaded_file($this->request->getData()['user_image']['tmp_name'], $uploadfile)){
-				$user->user_image = $uploadfile;
-
-				if($usersTable->save($user)) {
-					$this->Flash->success(__('The user has been saved, your confirmation email has been sent', ['id' => 'flashMessage']));
-					$message = 'Click on the link below to complete registration ';
-					$message .= 'http://localhost/users/verify/'.$user_tokenhash;
-					$message = wordwrap($message, 70);
-					$email = new Email('default');
-					$email->emailFormat('html');
-					$email->setFrom(['snookview147@gmail.com', 'snookview147@gmail.com']);
-					$email->setTo($user_email);
-					$email->setSubject('Confirm Registration for snookview.');
-					$email->send($message);
-				} else{
-					$this->Flash->success(__('The user could not be saved. Please, try again.', ['id' => 'flashMessage']));
-				}
-			} else {
-				$this->Flash->success(__('The user could not be saved. Please, try again.', ['id' => 'flashMessage']));
-			}
-		}
-		$roles = array('Admin' => 'Admin', 'User' => 'User', 'UserTimeline' => 'UserTimeline');
-		$this->set(compact('roles'));
-	}
-
-	public function verify($user_tokenhash){
-		$this->viewBuilder()->setLayout('layout_back');
-
-		$usersTable = TableRegistry::get('Users');
-		$verify = $usersTable->find('all')->where(['user_tokenhash'])->first();
-		$verify->user_activate = '1';
-		$usersTable->save($verify);
-	}
-
-/**
- * admin_edit method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
-	public function admin_edit($id = null) {
-		$this->viewBuilder()->setLayout('layout_back');
-		if (!$this->User->exists($id)) {
-			throw new NotFoundException(__('Invalid user'));
-		}
-		if ($this->request->is(array('post', 'put'))) {
-			if ($this->User->save($this->request->data)) {
-				$this->Session->setFlash(__('The user has been saved.'));
-				return $this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The user could not be saved. Please, try again.'));
-			}
-		} else {
-			$options = array('conditions' => array('User.' . $this->User->primaryKey => $id));
-			$this->request->data = $this->User->find('first', $options);
-		}
-		$user_username = $this->data['User']['user_username'];
-		$dir = new Folder('img' . DS . 'users' . DS . $user_username);
-		$files = $dir->find('.*\.jpg', true);
-		$roles = array('Admin' => 'Admin', 'User' => 'User', 'UserTimeline' => 'UserTimeline');
-		$this->set(compact('files', 'roles'));
-		//$people = $this->User->Person->find('list');
-		//$this->set(compact('people'));
-	}
-
-/**
- * admin_delete method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
-	public function admin_delete($id = null) {
-		$this->viewBuilder()->setLayout('layout_back');
-		$this->User->id = $id;
-		if (!$this->User->exists()) {
-			throw new NotFoundException(__('Invalid user'));
-		}
-		$this->request->onlyAllow('post', 'delete');
-		if ($this->User->delete()) {
-			$this->redirect($this->Auth->logout());
-			$this->Session->setFlash(__('You\'re account has been deleted'));
-		} else {
-			$this->Session->setFlash(__('You\'re account could not be deleted. Please, try again.'));
-		}
-		return $this->redirect(array('action' => 'login'));
-	}
+		return $this->redirect(['action' => 'login']);
+	}*/
  }

@@ -28,8 +28,7 @@ class ErrorController extends AppController
      *
      * @return void
      */
-    public function initialize()
-    {
+    public function initialize(){
         $this->loadComponent('RequestHandler', [
             'enableBeforeRedirect' => false,
         ]);
@@ -41,8 +40,7 @@ class ErrorController extends AppController
      * @param \Cake\Event\Event $event Event.
      * @return \Cake\Http\Response|null|void
      */
-    public function beforeFilter(Event $event)
-    {
+    public function beforeFilter(Event $event){
     }
 
     /**
@@ -51,8 +49,7 @@ class ErrorController extends AppController
      * @param \Cake\Event\Event $event Event.
      * @return \Cake\Http\Response|null|void
      */
-    public function beforeRender(Event $event)
-    {
+    public function beforeRender(Event $event){
         parent::beforeRender($event);
 
         $this->viewBuilder()->setTemplatePath('Error');
@@ -64,7 +61,6 @@ class ErrorController extends AppController
      * @param \Cake\Event\Event $event Event.
      * @return \Cake\Http\Response|null|void
      */
-    public function afterFilter(Event $event)
-    {
+    public function afterFilter(Event $event){
     }
 }

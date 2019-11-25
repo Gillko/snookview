@@ -37,7 +37,7 @@
 							<?php //echo h($ranking['Players']['player_nationality']); ?>
 						</td>
 						<td class="colspan" >
-							<?php if($ranking->player->player_flag) echo $this->Html->image(h($ranking->player->player_flag), array('class' => 'flag')); ?>
+							<?php if($ranking->player->player_flag) echo $this->Html->image('/img/flags/' . $ranking->player->player_flag, array('class' => 'flag')); ?>
 						</td>
 						<td><?php echo h($ranking['ranking_points']); ?>&nbsp;</td>
 					</tr>

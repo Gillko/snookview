@@ -7,15 +7,15 @@ use Cake\ORM\Table;
 class FavoritesTable extends Table
 {
 	public function initialize(array $config)
-    {
-    	$this->belongsTo('Users', [
-	    	'className' => 'Users',
+	{
+		$this->belongsTo('Users', [
+			'className' => 'Users',
 			'foreignKey' => 'user_id'
-	    ]);
+		]);
 
-	    $this->belongsTo('Videos', [
-	    	'className' => 'Videos',
+		$this->belongsTo('Videos', [
+			'className' => 'Videos',
 			'foreignKey' => 'video_id'
-	    ]);
+		]);
 	}
 }

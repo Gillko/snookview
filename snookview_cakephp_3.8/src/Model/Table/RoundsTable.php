@@ -6,12 +6,11 @@ use Cake\ORM\Table;
 
 class RoundsTable extends Table
 {
-	public function initialize(array $config){
-
+	public function initialize(array $config)
+	{
 		$this->belongsTo('Tournaments', [
-	    	'className' => 'Tournaments',
+			'className' => 'Tournaments',
 			'foreignKey' => 'tournament_id'
-	    ]);
-    	
+		]);
 	}
 }

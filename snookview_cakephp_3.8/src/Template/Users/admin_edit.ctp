@@ -1,86 +1,144 @@
 <?php $this->start('meta'); ?>
-	<title>Snookview - Edit User</title>
+	<title>Snookview - Admin Edit User</title>
 <?php $this->end(); ?>
 <div class="row">
 	<div class="col-md-3">
 		<ul class="nav nav-pills nav-stacked">
-			<li><?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $this->Form->value('User.user_id')), null, __('Are you sure you want to delete %s?', $this->Form->value('User.user_username'))); ?></li>
+			<li>
+				<?= 
+					$this->Form->postLink(
+					    'Delete',[
+					    	'action' => 'delete', $user->user_id
+					    ],
+					    [
+					    	'confirm' => 'Are you sure?'
+					    ]
+					)
+				?>
+				<?php
+					echo $this->Form->end();
+				?>
+			</li>
 		</ul>
 	</div>
 	<div class="col-md-9">
-		<?php echo $this->Form->create('User', array(
-			'inputDefaults' => array(
-			'div' => 'form-group',
-			'wrapInput' => false,
-			'class' => 'form-control'
-		),
+		<?php echo $this->Form->create($user->user_id, [
+			'inputDefaults' => [
+				'div' => 'form-group',
+				'wrapInput' => false,
+				'class' => 'form-control'
+			],
 			'class' => 'well',
-			'type' => 'file',
-		)); ?>
+			'type' => 'file'
+		]); ?>
 		<fieldset>
-			<legend><?php echo __('Edit User'); ?></legend>
-		<?php
-			echo $this->Form->input('user_id');
-			echo $this->Form->input('user_firstname', array(
-				'label' => 'Firstname',
-				'placeholder' => 'Firstname',
-			));
-			echo $this->Form->input('user_surname', array(
-				'label' => 'Surname',
-				'placeholder' => 'Surname',
-			));
-			echo $this->Form->input('user_country', array(
-				'label' => 'Country',
-				'placeholder' => 'Country',
-			));
-			echo $this->Form->input('user_username', array(
-				'label' => 'Username',
-				'placeholder' => 'Username',
-			));
-			echo $this->Form->input('email', array(
-				'label' => 'Email',
-				'placeholder' => 'Email',
-			));
-			if(!empty($this->data['User']['user_image'])): ?>
-				<div class="input">
-					<label>Current Image:</label>
-						<?php echo $this->Html->image($this->data['User']['user_image'], array('class' => 'profileImage', 'width' => 100)); ?>
-				</div>
-			<?php endif;
-			/*foreach($files as $u => $file): {
-				echo $this->Html->image(h('users/'. $this->data['User']['user_username'] . '/' . $file), array('width' => 100, 'class' => 'user', 'id' => ($u + 1)));
-				echo '&nbsp';
-			}
-			endforeach;*/
-			/*echo $this->Form->input('user_imagePath', array(
-				'label' => 'Image',
-				'placeholder' => 'Image',
-				'id' => 'playerFlag',
-			));*/
-			echo $this->Html->div('upload');
-				echo $this->Form->input('user_image', array(
-					'label' => 'Image',
-					'placeholder' => 'Image',
-					'type' => 'file',
-					'required' => true,
-					'disabled' => true,
-					'class' => 'input-upload form-control'
-				));
-			echo '</div>';
-			/*echo $this->Form->input('modified', array(
-				'type' => 'hidden',
-			));*/
-			if($current_user['user_role'] == 'admin'):
-			echo $this->Form->input('user_role', array(
-				'label' => 'Role',
-				'placeholder' => 'Role',
-				/*'type' => 'select',
-				'options' => $roles*/
-			));
-			endif;
-		?>
+			<legend><?php echo __('Admin Edit User'); ?></legend>
+			<div class="form-group">
+				<?php
+					echo $this->Form->control($user->user_firstname, array(
+						'label' => 'Firstname',
+						'placeholder' => 'Firstname',
+						'class' => 'form-control',
+						'value' => $user->user_firstname,
+						'name' => 'user_firstname'
+					));
+				?>
+			</div>
+			<div class="form-group">
+				<?php
+					echo $this->Form->control($user->user_lastname, array(
+						'label' => 'Lastname',
+						'placeholder' => 'Lastname',
+						'class' => 'form-control',
+						'value' => $user->user_lastname,
+						'name' => 'user_lastname'
+					));
+				?>
+			</div>
+			<div class="form-group">
+				<?php
+					echo $this->Form->control($user->user_country, array(
+						'label' => 'Country',
+						'placeholder' => 'Country',
+						'class' => 'form-control',
+						'value' => $user->user_country,
+						'name' => 'user_country'
+					));
+				?>
+			</div>
+			<div class="form-group">
+				<?php
+					echo $this->Form->control($user->user_username, array(
+						'label' => 'Username',
+						'placeholder' => 'Username',
+						'class' => 'form-control',
+						'value' => $user->user_username,
+						'name' => 'user_username'
+					));
+				?>
+			</div>
+			<div class="form-group">
+				<?php
+					echo $this->Form->control($user->email, array(
+						'label' => 'Email',
+						'placeholder' => 'Email',
+						'class' => 'form-control',
+						'value' => $user->email,
+						'name' => 'email'
+					));
+				?>
+			</div>
+			<div class="form-group">
+				<?php
+					if(!empty($user->user_image)): 
+				?>
+					<div class="input">
+						<label>Current Image (change by clicking image):</label>
+						<?php echo $this->Html->image('/img/users/' . $user->user_image, array('class' => 'profileImage', 'width' => 100)); ?>
+					</div>
+				<?php
+					else: 
+				?>
+					<div class="input">
+						<label>Current Image (change by clicking image):</label>
+						<?php echo $this->Html->image('users/profile.jpg', array('class' => 'profileImage', 'width' => 100)); ?>
+					</div>
+				<?php endif;
+					echo $this->Html->div('upload');
+						echo $this->Form->control($user->user_image, array(
+							'label' => 'Image',
+							'placeholder' => 'Image',
+							'type' => 'file',
+							'required' => true,
+							'disabled' => true,
+							'class' => 'input-upload form-control',
+							'value' => $user->user_image,
+							'name' => 'user_image'
+						));
+					echo '</div>';
+				?>
+			</div>
+			<div class="form-group">
+				<?php
+					echo $this->Form->control($user->user_role, array(
+						'options' => $roles,
+						'label' => 'Role',
+						'placeholder' => 'Role',
+						'class' => 'form-control',
+						'value' => $user->user_role,
+						'name' => 'user_role'
+					));
+				?>
+			</div>
+			<div class="submit">
+				<?php
+					echo $this->Form->button(__('Edit'), ['class'=> 'btn btn-default btn-success btn-lg']);
+				?>
+			</div>
+			<?php
+				echo $this->Form->end();
+			?>
 		</fieldset>
-		<?php echo $this->Form->end(array('label' => __('Edit', true), 'class' => 'btn btn-default btn-success btn-lg')); ?>
 	</div>
 </div>
 <script>

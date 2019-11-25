@@ -62,69 +62,15 @@ Router::scope('/', function (RouteBuilder $routes) {
      * its action called 'display', and we pass a param to select the view file
      * to use (in this case, src/Template/Pages/home.ctp)...
      */
-    $routes->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
+    //$routes->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
 
     /**
      * ...and connect the rest of 'Pages' controller's URLs.
      */
-    $routes->connect('/pages/*', ['controller' => 'Pages', 'action' => 'display']);
+    $routes->connect('/', ['controller' => 'index', 'action' => 'index']);
 
-    /*Admin add routes*/
-    $routes->connect('/admin/videos/add', ['controller' => 'videos', 'action' => 'adminAdd']);
-
-    $routes->connect('/admin/items/add', ['controller' => 'items', 'action' => 'adminAdd']);
-
-    $routes->connect('/admin/comments/add', ['controller' => 'comments', 'action' => 'adminAdd']);
-
-    $routes->connect('/admin/favorites/add', ['controller' => 'favorites', 'action' => 'adminAdd']);
-
-    $routes->connect('/admin/sessions/add', ['controller' => 'sessions', 'action' => 'adminAdd']);
-
-    $routes->connect('/admin/players/add', ['controller' => 'players', 'action' => 'adminAdd']);
-
-    $routes->connect('/admin/rankings/add', ['controller' => 'rankings', 'action' => 'adminAdd']);
-
-    $routes->connect('/admin/rounds/add', ['controller' => 'rounds', 'action' => 'adminAdd']);
-
-    $routes->connect('/admin/seasons/add', ['controller' => 'seasons', 'action' => 'adminAdd']);
-
-    $routes->connect('/admin/timelines/add', ['controller' => 'timelines', 'action' => 'adminAdd']);
-
-    $routes->connect('/admin/tournaments/add', ['controller' => 'tournaments', 'action' => 'verify']);
-
-    $routes->connect('/users/verify', ['controller' => 'users', 'action' => 'adminAdd']);
-    /*Admin add routes*/
-
-    /*Verify account*/
-    $routes->connect('/admin/users/add', ['controller' => 'users', 'action' => 'adminAdd']);
-    /*Verify account*/
-
-    /*Admin index routes*/
-    $routes->connect('/videos/admin-index', ['controller' => 'videos', 'action' => 'adminIndex']);
-    /*Admin index routes*/
-
-
-    $routes->connect('/admin/videos/edit/', ['controller' => 'videos', 'action' => 'adminEdit']);
-
-    $routes->connect('/admin/items/edit/{$id}', ['controller' => 'items', 'action' => 'adminEdit']);
-
-    $routes->connect(
-        '/videos/edit/:id',
-        [
-            'controller' => 'Videos', 
-            'action' => 'edit'
-        ]
-    )
-    ->setPatterns(
-        [
-            'id' => '\d+'
-        ]
-    )
-    ->setPass(
-        [
-            'id'
-        ]
-    );
+   /* $routes->connect('/', array('controller' => 'pages', 'action' => 'display', 'home'));
+    $routes->connect('/pages/*', array('controller' => 'pages', 'action' => 'display'));*/
 
     $routes->connect(
         '/videos/*',
@@ -134,8 +80,93 @@ Router::scope('/', function (RouteBuilder $routes) {
         ]
     );
 
+    $routes->connect('/login'   , ['controller' => 'users'  , 'action' => 'login']);
+    $routes->connect('/logout'  , ['controller' => 'users'  , 'action' => 'logout']);
+
+    /*Admin add routes*/
+    $routes->connect('/admin/videos/add'        , ['controller' => 'videos'     , 'action' => 'adminAdd']);
+    $routes->connect('/admin/items/add'         , ['controller' => 'items'      , 'action' => 'adminAdd']);
+    $routes->connect('/admin/comments/add'      , ['controller' => 'comments'   , 'action' => 'adminAdd']);
+    $routes->connect('/admin/favorites/add'     , ['controller' => 'favorites'  , 'action' => 'adminAdd']);
+    $routes->connect('/admin/sessions/add'      , ['controller' => 'sessions'   , 'action' => 'adminAdd']);
+    $routes->connect('/admin/players/add'       , ['controller' => 'players'    , 'action' => 'adminAdd']);
+    $routes->connect('/admin/rankings/add'      , ['controller' => 'rankings'   , 'action' => 'adminAdd']);
+    $routes->connect('/admin/rounds/add'        , ['controller' => 'rounds'     , 'action' => 'adminAdd']);
+    $routes->connect('/admin/seasons/add'       , ['controller' => 'seasons'    , 'action' => 'adminAdd']);
+    $routes->connect('/admin/timelines/add'     , ['controller' => 'timelines'  , 'action' => 'adminAdd']);
+    $routes->connect('/admin/tournaments/add'   , ['controller' => 'tournaments', 'action' => 'adminAdd']);
+    $routes->connect('/admin/users/add'         , ['controller' => 'users'      , 'action' => 'adminAdd']);
+    /*Admin add routes*/
+
+    /*Verify account*/
+    $routes->connect('/users/verify', ['controller' => 'users', 'action' => 'verify']);
+    /*Verify account*/
+
+    /*Admin index routes*/
+    $routes->connect('/admin/videos/'       , ['controller' => 'videos'     , 'action' => 'adminIndex']);
+    $routes->connect('/admin/seasons/'      , ['controller' => 'seasons'    , 'action' => 'adminIndex']);
+    $routes->connect('/admin/timelines/'    , ['controller' => 'timelines'  , 'action' => 'adminIndex']);
+    $routes->connect('/admin/items/'        , ['controller' => 'items'      , 'action' => 'adminIndex']);
+    $routes->connect('/admin/rankings/'     , ['controller' => 'rankings'   , 'action' => 'adminIndex']);
+    $routes->connect('/admin/users/'        , ['controller' => 'users'      , 'action' => 'adminIndex']);
+    $routes->connect('/admin/comments/'     , ['controller' => 'comments'   , 'action' => 'adminIndex']);
+    $routes->connect('/admin/rounds/'       , ['controller' => 'rounds'     , 'action' => 'adminIndex']);
+    $routes->connect('/admin/tournaments/'  , ['controller' => 'tournaments', 'action' => 'adminIndex']);
+    $routes->connect('/admin/favorites/'    , ['controller' => 'favorites'  , 'action' => 'adminIndex']);
+    $routes->connect('/admin/players/'      , ['controller' => 'players'    , 'action' => 'adminIndex']);
+    $routes->connect('/admin/sessions/'     , ['controller' => 'sessions'   , 'action' => 'adminIndex']);
+    /*Admin index routes*/
+
+    /*Admin view routes*/
+    $routes->connect('/admin/users/view/:id'        , ['controller' => 'users'      , 'action' => 'adminView'])->setPatterns(['id' => '\d+'])->setPass(['id']);
+    $routes->connect('/admin/videos/view/:id'       , ['controller' => 'videos'     , 'action' => 'adminView'])->setPatterns(['id' => '\d+'])->setPass(['id']);
+    $routes->connect('/admin/seasons/view/:id'      , ['controller' => 'seasons'    , 'action' => 'adminView'])->setPatterns(['id' => '\d+'])->setPass(['id']);
+    $routes->connect('/admin/timelines/view/:id'    , ['controller' => 'timelines'  , 'action' => 'adminView'])->setPatterns(['id' => '\d+'])->setPass(['id']);
+    $routes->connect('/admin/items/view/:id'        , ['controller' => 'items'      , 'action' => 'adminView'])->setPatterns(['id' => '\d+'])->setPass(['id']);
+    $routes->connect('/admin/rankings/view/:id'     , ['controller' => 'rankings'   , 'action' => 'adminView'])->setPatterns(['id' => '\d+'])->setPass(['id']);
+    $routes->connect('/admin/comments/view/:id'     , ['controller' => 'comments'   , 'action' => 'adminView'])->setPatterns(['id' => '\d+'])->setPass(['id']);
+    $routes->connect('/admin/rounds/view/:id'       , ['controller' => 'rounds'     , 'action' => 'adminView'])->setPatterns(['id' => '\d+'])->setPass(['id']);
+    $routes->connect('/admin/tournaments/view/:id'  , ['controller' => 'tournaments', 'action' => 'adminView'])->setPatterns(['id' => '\d+'])->setPass(['id']);
+    $routes->connect('/admin/favorites/view/:id'    , ['controller' => 'favorites'  , 'action' => 'adminView'])->setPatterns(['id' => '\d+'])->setPass(['id']);
+    $routes->connect('/admin/players/view/:id'      , ['controller' => 'players'    , 'action' => 'adminView'])->setPatterns(['id' => '\d+'])->setPass(['id']);
+    $routes->connect('/admin/sessions/view/:id'     , ['controller' => 'sessions'   , 'action' => 'adminView'])->setPatterns(['id' => '\d+'])->setPass(['id']);
+    /*Admin view routes*/
+
+    /*Admin edit routes*/
+    $routes->connect('/admin/comments/edit/:id'     , ['controller' => 'Comments'       , 'action' => 'adminEdit'])->setPatterns(['id' => '\d+'])->setPass(['id']);
+    $routes->connect('/admin/favorites/edit/:id'    , ['controller' => 'Favorites'      , 'action' => 'adminEdit'])->setPatterns(['id' => '\d+'])->setPass(['id']);
+    $routes->connect('/admin/items/edit/:id'        , ['controller' => 'Items'          , 'action' => 'adminEdit'])->setPatterns(['id' => '\d+'])->setPass(['id']);
+    $routes->connect('/admin/players/edit/:id'      , ['controller' => 'Players'        , 'action' => 'adminEdit'])->setPatterns(['id' => '\d+'])->setPass(['id']);
+    $routes->connect('/admin/rankings/edit/:id'     , ['controller' => 'Rankings'       , 'action' => 'adminEdit'])->setPatterns(['id' => '\d+'])->setPass(['id']);
+    $routes->connect('/admin/rounds/edit/:id'       , ['controller' => 'Rounds'         , 'action' => 'adminEdit'])->setPatterns(['id' => '\d+'])->setPass(['id']);
+    $routes->connect('/admin/seasons/edit/:id'      , ['controller' => 'Seasons'        , 'action' => 'adminEdit'])->setPatterns(['id' => '\d+'])->setPass(['id']);
+    $routes->connect('/admin/sessions/edit/:id'     , ['controller' => 'Sessions'       , 'action' => 'adminEdit'])->setPatterns(['id' => '\d+'])->setPass(['id']);
+    $routes->connect('/admin/timelines/edit/:id'    , ['controller' => 'Timelines'      , 'action' => 'adminEdit'])->setPatterns(['id' => '\d+'])->setPass(['id']);
+    $routes->connect('/admin/tournaments/edit/:id'  , ['controller' => 'Tournaments'    , 'action' => 'adminEdit'])->setPatterns(['id' => '\d+'])->setPass(['id']);
+    $routes->connect('/admin/users/edit/:id'        , ['controller' => 'Users'          , 'action' => 'adminEdit'])->setPatterns(['id' => '\d+'])->setPass(['id']);
+    $routes->connect('/admin/comments/edit/:id'     , ['controller' => 'Comments'       , 'action' => 'adminEdit'])->setPatterns(['id' => '\d+'])->setPass(['id']);
+    $routes->connect('/admin/rankings/edit/:id'     , ['controller' => 'Rankings'       , 'action' => 'adminEdit'])->setPatterns(['id' => '\d+'])->setPass(['id']);
+    $routes->connect('/admin/videos/edit/:id'       , ['controller' => 'Videos'         , 'action' => 'adminEdit'])->setPatterns(['id' => '\d+'])->setPass(['id']);
+    /*Admin edit routes*/
+
+    /*Admin delete records*/
+    $routes->connect('/admin/users/delete/:id'          , ['controller' => 'users'      , 'action' => 'adminDelete']);
+    $routes->connect('/admin/videos/delete/:id'         , ['controller' => 'videos'     , 'action' => 'adminDelete']);
+    $routes->connect('/admin/items/delete/:id'          , ['controller' => 'items'      , 'action' => 'adminDelete']);
+    $routes->connect('/admin/comments/delete/:id'       , ['controller' => 'comments'   , 'action' => 'adminDelete']);
+    $routes->connect('/admin/favorites/delete/:id'      , ['controller' => 'favorites'  , 'action' => 'adminDelete']);
+    $routes->connect('/admin/sessions/delete/:id'       , ['controller' => 'sessions'   , 'action' => 'adminDelete']);
+    $routes->connect('/admin/players/delete/:id'        , ['controller' => 'players'    , 'action' => 'adminDelete']);
+    $routes->connect('/admin/rankings/delete/:id'       , ['controller' => 'rankings'   , 'action' => 'adminDelete']);
+    $routes->connect('/admin/rounds/delete/:id'         , ['controller' => 'rounds'     , 'action' => 'adminDelete']);
+    $routes->connect('/admin/seasons/delete/:id'        , ['controller' => 'seasons'    , 'action' => 'adminDelete']);
+    $routes->connect('/admin/timelines/delete/:id'      , ['controller' => 'timelines'  , 'action' => 'adminDelete']);
+    $routes->connect('/admin/tournaments/delete/:id'    , ['controller' => 'tournaments', 'action' => 'adminDelete']);
+    /*Admin delete records*/
+
+
     /*videos with slug*/
-    $routes->connect(
+     $routes->connect(
         '/videos/:id/:slug',
         [
             'controller' => 'Videos', 

@@ -34,7 +34,7 @@
 				<?php foreach ($sessions as $session): ?>
 					<tr>
 						<td>
-							<?php echo $this->Html->link($session->session_id, ['action' => 'view', $session->session_id]); ?>
+							<?php echo $this->Html->link($session->session_id, ['action' => 'adminView', $session->session_id]); ?>
 							</td>
 						<td>
 							<?php echo h($session->session_title); ?>
@@ -43,18 +43,15 @@
 							<?php echo h($session->session_description); ?>
 						</td>
 						<td class="actions">
-							<?php echo $this->Html->link($this->Html->tag('i', '', ['class' => 'glyphicon glyphicon-edit']) . "", 
-								['action' => 'edit', $session->session_id], 
+							<?php echo $this->Html->link($this->Html->tag('i', '', 
+								['class' => 'glyphicon glyphicon-edit']) . "", 
+								['action' => 'adminEdit', $session->session_id], 
 								['class' => 'btn btn-mini btn-noPadding', 'escape' => false]
 							); ?>
-							<?php echo $this->Form->postLink(
-								$this->Html->tag('i', '', ['class' => 'glyphicon glyphicon-remove']). "",
-									['action' => 'delete', $session->session_id],
-									['escape'=>false],
-									__('Are you sure you want to delete %s?',$session->session_title),
-									['class' => 'btn btn-mini btn-noPadding']
-								);
-							?>
+							<?php echo $this->element('deleteAction', array(
+								"idDeleteAction" 		=> $session->session_id,
+								"displayDeleteAction" 	=> $session->session_title
+							)); ?>
 						</td>
 					</tr>
 				<?php endforeach; ?>

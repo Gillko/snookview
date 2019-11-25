@@ -25,7 +25,7 @@
 				</tr>
 				<?php foreach ($comments as $comment): ?>
 					<tr>
-						<td><?php echo $this->Html->link($comment->comment_id, ['action' => 'view', $comment->comment_id]); ?>&nbsp;</td>
+						<td><?php echo $this->Html->link($comment->comment_id, ['action' => 'adminView', $comment->comment_id]); ?>&nbsp;</td>
 						<td><?php echo h($comment->comment_body); ?>&nbsp;</td>
 						<td><?php echo h(date("d-m-Y H:i:s", strtotime($comment->created))); ?></td>
 						<td><?php echo h(date("d-m-Y H:i:s", strtotime($comment->modified))); ?></td>
@@ -41,16 +41,14 @@
 						<td class="actions">
 							<?php echo $this->Html->link(
 							    $this->Html->tag('i', '', ['class' => 'glyphicon glyphicon-edit']) . "",
-							    ['action' => 'edit', $comment->comment_id],
+							    ['action' => 'adminEdit', $comment->comment_id],
 							    ['class' => 'btn btn-mini btn-noPadding', 'escape' => false]
 							); ?>
-							<?php echo $this->Form->postLink(
-							   $this->Html->tag('i', '', ['class' => 'glyphicon glyphicon-remove']). "",
-							        ['action' => 'delete', $comment->comment_id],
-							        ['escape'=>false],
-							    __('Are you sure you want to delete %s?', $comment->comment_body),
-							   ['class' => 'btn btn-mini btn-noPadding']
-							); ?>
+
+							<?php echo $this->element('deleteAction', array(
+								"idDeleteAction" 		=> $comment->comment_id,
+								"displayDeleteAction" 	=> $comment->comment_body
+							)); ?>
 						</td>
 					</tr>
 				<?php endforeach; ?>

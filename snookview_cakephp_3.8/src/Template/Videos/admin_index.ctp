@@ -52,7 +52,7 @@
 				<?php foreach ($videos as $video): ?>
 					<tr>
 						<td>
-							<?php echo $this->Html->link($video->video_id, ['action' => 'view', $video->video_id]); ?>
+							<?php echo $this->Html->link($video->video_id, ['action' => 'adminView', $video->video_id]); ?>
 							</td>
 						<td>
 							<?php echo h($video->video_title); ?>
@@ -87,18 +87,15 @@
 							</a>
 						</td>
 						<td class="actions">
-							<?php echo $this->Html->link($this->Html->tag('i', '', ['class' => 'glyphicon glyphicon-edit']) . "", 
-								['action' => 'edit', $video->video_id], 
+							<?php echo $this->Html->link(
+								$this->Html->tag('i', '', ['class' => 'glyphicon glyphicon-edit']) . "", 
+								['action' => 'adminEdit', $video->video_id], 
 								['class' => 'btn btn-mini btn-noPadding', 'escape' => false]
 							); ?>
-							<?php echo $this->Form->postLink(
-								$this->Html->tag('i', '', ['class' => 'glyphicon glyphicon-remove']). "",
-									['action' => 'delete', $video->video_id],
-									['escape'=>false],
-									__('Are you sure you want to delete %s?',$video->video_title),
-									['class' => 'btn btn-mini btn-noPadding']
-								);
-							?>
+							<?php echo $this->element('deleteAction', array(
+								"idDeleteAction" 		=> $video->video_id,
+								"displayDeleteAction" 	=> $video->video_title
+							)); ?>
 						</td>
 					</tr>
 				<?php endforeach; ?>

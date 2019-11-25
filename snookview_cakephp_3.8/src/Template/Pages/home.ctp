@@ -1,276 +1,278 @@
-<?php
-/**
- * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
- * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
- *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
- * Redistributions of files must retain the above copyright notice.
- *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
- * @link          https://cakephp.org CakePHP(tm) Project
- * @since         0.10.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
- */
-use Cake\Cache\Cache;
-use Cake\Core\Configure;
-use Cake\Core\Plugin;
-use Cake\Datasource\ConnectionManager;
-use Cake\Error\Debugger;
-use Cake\Http\Exception\NotFoundException;
+<?php $this->start('meta'); ?>
+    <!-- META FACEBOOK SHARE-->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Snookview." />
+    <meta property="og:site_name" content="Snookview."/>
+    <meta property="og:url" content="http://www.snookview.be/" />
+    <meta property="og:description" content="The site for on demand snooker videos of the 3 biggest tournaments." />
+    <meta property="og:image" content="http://www.snookview.be/img/snookview-share.png" />
 
-$this->layout = false;
-
-if (!Configure::read('debug')) :
-    throw new NotFoundException(
-        'Please replace src/Template/Pages/home.ctp with your own version or re-enable debug mode.'
-    );
-endif;
-
-$cakeDescription = 'CakePHP: the rapid development PHP framework';
-?>
-<!DOCTYPE html>
-<html>
-<head>
-    <?= $this->Html->charset() ?>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>
-        <?= $cakeDescription ?>
-    </title>
-
-    <?= $this->Html->meta('icon') ?>
-    <?= $this->Html->css('base.css') ?>
-    <?= $this->Html->css('style.css') ?>
-    <?= $this->Html->css('home.css') ?>
-    <link href="https://fonts.googleapis.com/css?family=Raleway:500i|Roboto:300,400,700|Roboto+Mono" rel="stylesheet">
-</head>
-<body class="home">
-
-<header class="row">
-    <div class="header-image"><?= $this->Html->image('cake.logo.svg') ?></div>
-    <div class="header-title">
-        <h1>Welcome to CakePHP <?= Configure::version() ?> Red Velvet. Build fast. Grow solid.</h1>
+    <!-- META TWITTER SHARE-->
+    <meta name="twitter:card" content="photo"/>
+    <meta name="twitter:title" content="Snookview." />
+    <meta name="twitter:description" content="The site for on demand snooker videos of the 3 biggest tournaments." />
+    <meta name="twitter:site" content="Snookview."/>
+    <meta name="twitter:image" content="http://www.snookview.be/img/snookview-share.png" />
+    
+    <title>Snookview</title>
+<?php $this->end(); ?>
+<div class="row bgWhiteTitle">
+    <div class="col-md-12">
+        <h3><?php echo 'Last updated video by snookview.<br/>' ?></h3>
     </div>
-</header>
-
-<div class="row">
-    <div class="columns large-12">
-        <div class="ctp-warning alert text-center">
-            <p>Please be aware that this page will not be shown if you turn off debug mode unless you replace src/Template/Pages/home.ctp with your own version.</p>
+</div>
+<div class="row bgWhite">
+    <div class="col-md-3">
+    </div>
+    <div class="col-md-6 noPaddingTablet noPaddingMobile">
+        <div class="video-container">
+            <iframe id="video-vimeo" src="https://player.vimeo.com/video/<?php echo $video->video_url ?>" width="640" height="360" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
         </div>
-        <div id="url-rewriting-warning" class="alert url-rewriting">
+        <div class="matchinformation text-center">
             <ul>
-                <li class="bullet problem">
-                    URL rewriting is not properly configured on your server.<br />
-                    1) <a target="_blank" href="https://book.cakephp.org/3.0/en/installation.html#url-rewriting">Help me configure it</a><br />
-                    2) <a target="_blank" href="https://book.cakephp.org/3.0/en/development/configuration.html#general-configuration">I don't / can't use URL rewriting</a>
+                <li>
+                    <h4><?php echo $video->tournament->tournament_name . ' ' . $video->tournament->tournament_year ?></h4>
+                </li>
+                <li>
+                    <h4><?php echo $video->round->round_name. '<br/>' . $video->video_title ?></h4>
+                </li>
+                <li>
+                    <h4><?php echo h(date("d-m-Y", strtotime($video->video_date))); ?></h4>
                 </li>
             </ul>
+            <div class="matchinformationScorePlayers">
+                <div class="score text-center">
+                    <p>
+                        <?php echo $video->video_scoreA ?>
+                    </p>
+                </div>
+                <?php foreach ($video->players as $player): ?>
+                    <div class="player text-center">
+                        <p>
+                            <?php 
+                                echo $this->Html->link(
+                                    $player->player_firstname . ' ' . $player->player_surname, [
+                                        'controller' => 'players', 
+                                        'action' => 'view', 
+                                        $player->player_id, '', $player->player_slug
+                                    ]
+                                ); 
+                            ?>
+                        </p>
+                    </div>
+                <?php endforeach; ?>
+                <div class="score text-center">
+                    <p>
+                        <?php echo $video->video_scoreB ?>
+                    </p>
+                </div>
+            </div>
         </div>
-        <?php Debugger::checkSecurityKeys(); ?>
+    </div>
+    <div class="col-md-3">
     </div>
 </div>
-
-<div class="row">
-    <div class="columns large-6">
-        <h4>Environment</h4>
-        <ul>
-        <?php if (version_compare(PHP_VERSION, '5.6.0', '>=')) : ?>
-            <li class="bullet success">Your version of PHP is 5.6.0 or higher (detected <?= PHP_VERSION ?>).</li>
-        <?php else : ?>
-            <li class="bullet problem">Your version of PHP is too low. You need PHP 5.6.0 or higher to use CakePHP (detected <?= PHP_VERSION ?>).</li>
-        <?php endif; ?>
-
-        <?php if (extension_loaded('mbstring')) : ?>
-            <li class="bullet success">Your version of PHP has the mbstring extension loaded.</li>
-        <?php else : ?>
-            <li class="bullet problem">Your version of PHP does NOT have the mbstring extension loaded.</li>
-        <?php endif; ?>
-
-        <?php if (extension_loaded('openssl')) : ?>
-            <li class="bullet success">Your version of PHP has the openssl extension loaded.</li>
-        <?php elseif (extension_loaded('mcrypt')) : ?>
-            <li class="bullet success">Your version of PHP has the mcrypt extension loaded.</li>
-        <?php else : ?>
-            <li class="bullet problem">Your version of PHP does NOT have the openssl or mcrypt extension loaded.</li>
-        <?php endif; ?>
-
-        <?php if (extension_loaded('intl')) : ?>
-            <li class="bullet success">Your version of PHP has the intl extension loaded.</li>
-        <?php else : ?>
-            <li class="bullet problem">Your version of PHP does NOT have the intl extension loaded.</li>
-        <?php endif; ?>
-        </ul>
+<!-- <div class="row bgGreenTitle">
+    <div class="col-md-12 noPaddingTablet noPaddingMobile">
+        <h3 class="white">About</h3>
     </div>
-    <div class="columns large-6">
-        <h4>Filesystem</h4>
-        <ul>
-        <?php if (is_writable(TMP)) : ?>
-            <li class="bullet success">Your tmp directory is writable.</li>
-        <?php else : ?>
-            <li class="bullet problem">Your tmp directory is NOT writable.</li>
-        <?php endif; ?>
-
-        <?php if (is_writable(LOGS)) : ?>
-            <li class="bullet success">Your logs directory is writable.</li>
-        <?php else : ?>
-            <li class="bullet problem">Your logs directory is NOT writable.</li>
-        <?php endif; ?>
-
-        <?php $settings = Cache::getConfig('_cake_core_'); ?>
-        <?php if (!empty($settings)) : ?>
-            <li class="bullet success">The <em><?= $settings['className'] ?>Engine</em> is being used for core caching. To change the config edit config/app.php</li>
-        <?php else : ?>
-            <li class="bullet problem">Your cache is NOT working. Please check the settings in config/app.php</li>
-        <?php endif; ?>
-        </ul>
+<div> -->
+<div class="row bgGreen">
+    <div class="col-md-1">
     </div>
-    <hr />
+    <div class="col-md-10 about">
+        <div class="row bgGreenTitle">
+            <h3 class="white">About</h3>
+        </div>
+        <div class="white">
+            <p>Hi there and welcome on the 'snookview.' website.</p>
+            <p> Here you're at the right address for on demand snooker videos of the 3 biggest tournaments: the UK Championship, the Masters and the World Championship!</p>
+            <p>Since the age of 14 I'm very interested in everything about snooker and pool. I spent a lot of time watching the 
+                <a href="http://www.bbc.co.uk" target="_blank"><i class="white">BBC</i></a>
+                . But my search to find full snooker matches wasn't successfull, so I decided to make my own website with matches from beginning to end.
+            </p>
+            <p>If you go to the Tournament page you can see al the videos of a tournament by clicking on the picture of the winner. Or if you only like to see the matches of a particular round you can click on the link of a round. Underneath each match there is a possibility to add a timeline. Each timeline has specific clickable items and each item represent a moment in the video. After clicking an item you go to that specific moment in the video. If you know I nice moment in a particular match, please <a href="/contact" class="white"><i>contact</i></a> me with the match and the specific time of the moment. Or ask me for permission to add the item yourself, I will give you access.</p>
+            <p>All videos provided on this website are recorded by me from the BBC channel but I don't own the rights to those snooker matches. Those rights belong to the 
+                <a href="http://www.bbc.co.uk" target="_blank"><i class="white">BBC</i></a>
+                !<p>Here are some other 
+                <a href="http://www.bbc.co.uk" target="_blank"><i class="white">BBC</i></a>
+                 websites:
+            </p>
+            <ul>
+                <li><a href="http://www.bbc.com/sport/" target="_blank"><i class="white">BBC Sport</i></a></li>
+                <li><a href="http://www.bbc.co.uk/iplayer" target="_blank"><i class="white">BBC iPlayer</i></a></li>
+                <li><a href="http://www.bbc.co.uk/bbcone" target="_blank"><i class="white">BBC One</i></a></li>
+                <li><a href="http://www.bbc.co.uk/bbctwo" target="_blank"><i class="white">BBC Two</i></a></li>
+            </ul>
+            <p>'Snookview.' also doesn't have the ownership of any pictures used on the website. Underneath each picture there is written: <i>'Image src'</i>. When clicking on it you go to the sources website where you can find the original image.</p>
+            <!-- <p>Any other questions? Feel free to <a href="/contact"><i class="white">contact</i></a> me! I will get back to you asap!</p> -->
+            <br/>
+            <br/>
+            <p>Greetings</p>
+            <p><a href="/" class="white"><i class="white">Snookview.</i></a></p>
+        </div>
+    </div>
+    <div class="col-md-1">
+    </div>
 </div>
-
-<div class="row">
-    <div class="columns large-6">
-        <h4>Database</h4>
-        <?php
-        try {
-            $connection = ConnectionManager::get('default');
-            $connected = $connection->connect();
-        } catch (Exception $connectionError) {
-            $connected = false;
-            $errorMsg = $connectionError->getMessage();
-            if (method_exists($connectionError, 'getAttributes')) :
-                $attributes = $connectionError->getAttributes();
-                if (isset($errorMsg['message'])) :
-                    $errorMsg .= '<br />' . $attributes['message'];
-                endif;
-            endif;
+<div class="row bgWhiteTitle">
+    <div class="col-md-12 noPaddingTablet noPaddingMobile">
+        <h3 class="">Player Profiles</h2>
+    </div>
+<div>
+<div class="row bgWhite">
+    <div class="col-md-1">
+    </div>
+    <div class="col-md-10 noPaddingTablet noPaddingMobile">
+        <div class="row players">
+            <?php foreach ($players as $player): ?>
+                <div class="col-md-3 col-sm-6 col-xs-6 player-image noPaddingTablet noPaddingMobile">
+                    <?php 
+                        if(!empty($player->player_image)): {
+                            echo $this->Html->link(
+                                $this->Html->image(
+                                    '/img/players/' . $player->player_image, [
+                                        'class' => 'thumb img-responsive', 
+                                        'alt' => $player->player_firstname . ' ' . $player->player_surname
+                                        ]
+                                    ) 
+                                    . '<p class="img-responsive">' . $player->player_surname . '</p>', [
+                                        'controller' => 'players', 
+                                        'action' => '', 
+                                        $player->player_id, '', $player->player_slug
+                                    ], [
+                                        'escape' => false
+                                    ]
+                                ); 
+                            } 
+                        ?>
+                        <?php 
+                            else:{
+                                echo $this->Html->link(
+                                    $this->Html->image('/img/players/Profile.jpg', [
+                                        'class' => 'thumb img-responsive'
+                                        ]
+                                    ) .  '<p>' . $player->player_surname . '</p>', [
+                                        'controller' => 'players', 
+                                        'action' => 'view', 
+                                        $player->player_id, '', $player->player_slug
+                                    ],
+                                    [
+                                        'escape' => false
+                                    ]
+                                ); 
+                            } 
+                        ?>
+                    <?php endif; ?>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+    <div class="col-md-1">
+    </div>
+</div>
+<div class="row bgGreenTitle">
+    <div class="col-md-12 noPaddingTablet noPaddingMobile">
+        <h3 class="white">World Snooker ranking Top 16 <?php echo '(' . $season->season_beginYear . ' - ' . $season->season_endYear . ')'; ?></h3>
+    </div>
+</div>
+<div class="row bgGreen">
+    <div class="col-md-2">
+    </div>
+    <div class="col-md-8 noPaddingTablet noPaddingMobile">
+        <div id="table-container" class="table-responsive table-container">
+            <table class="ranking home">
+                <?php foreach ($rankings as $ranking): ?>
+                    <tr>
+                        <td class="text-center">
+                            <?php 
+                                echo $ranking->ranking_rank 
+                            ?>
+                        </td> 
+                        <td class="text-center">
+                            <?php 
+                                if($ranking->player->player_flag) 
+                                    echo $this->Html->image(
+                                        '/img/flags/' . $ranking->player->player_flag, [
+                                            'class' => 'flag'
+                                        ]
+                                    )
+                                ; 
+                            ?>
+                        </td>
+                        <td class="text-center">
+                            <a href="<?php WWW_ROOT ?>/players/<?php echo $ranking->player->player_id; ?>/<?php echo $ranking->player->player_slug; ?>">
+                                <?php 
+                                    echo $ranking->player->player_firstname . ' ' .  $ranking->player->player_surname;
+                                ?>
+                            </a>
+                        </td>
+                        <td class="text-center">
+                            <?php echo $ranking->ranking_points ?>
+                        </td> 
+                    </tr>
+                <?php endforeach; ?>
+            </table>
+        </div>
+    </div>
+    <div class="col-md-2">
+    </div>
+</div>
+<div class="row bgWhiteTitle">
+    <div class="col-md-12 noPaddingTablet noPaddingMobile">
+        <h3>Social Media</h3>
+    </div>
+</div>
+<div class="row bgWhite">
+    <div class="col-md-4">
+    </div>
+    <div class="col-md-1 col-sm-4 col-xs-4 padding-bottom">
+        <a href="https://www.facebook.com/snookview/" class="" data-lang="en" target="_blank">
+            <?php echo $this->Html->image('assets/fb.png', array('class' => 'socialImgLarge center-block', 'alt' => 'https://www.facebook.com/snookview')); ?>
+        </a>
+    </div>
+    <div class="col-md-1 col-sm-4 col-xs-4 padding-bottom">
+        <a href="https://twitter.com/snookview" class="" data-lang="en" target="_blank">
+            <?php echo $this->Html->image('assets/tw.png', array('class' => 'socialImgLarge center-block', 'alt' => 'https://twitter.com/snookview')); ?>
+        </a>
+    </div>
+    <div class="col-md-1 col-sm-4 col-xs-4 padding-bottom">
+        <a href="https://www.youtube.com/channel/UC6hrDfllhCdWtiW-HI2stDw" class="" data-lang="en" target="_blank">
+            <?php echo $this->Html->image('assets/yt.png', array('class' => 'socialImgLarge center-block', 'alt' => 'https://www.youtube.com/channel/UC6hrDfllhCdWtiW-HI2stDw'));?>
+        </a>
+    </div>
+    <div class="col-md-1 col-sm-4 col-xs-4 padding-bottom">
+        <a href="https://www.instagram.com/snookview/" class="" data-lang="en" target="_blank">
+            <?php echo $this->Html->image('assets/instagram.png', array('class' => 'socialImgLarge center-block', 'alt' => 'https://www.instagram.com/snookview/')); ?>
+        </a>
+    </div>
+    <div class="col-md-4">
+    </div>
+</div>
+<script>
+    var tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/player_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    var player;
+    var video_sort = '<?php echo $video['Video']['video_sort'] ?>';
+    //console.log(video_sort);
+    function onYouTubePlayerAPIReady() {
+        if(video_sort == 'Single'){
+            player = new YT.Player('player', {
+                videoId: '<?php echo $video['Video']['video_url'] ?>'
+          });
         }
-        ?>
-        <ul>
-        <?php if ($connected) : ?>
-            <li class="bullet success">CakePHP is able to connect to the database.</li>
-        <?php else : ?>
-            <li class="bullet problem">CakePHP is NOT able to connect to the database.<br /><?= $errorMsg ?></li>
-        <?php endif; ?>
-        </ul>
-    </div>
-    <div class="columns large-6">
-        <h4>DebugKit</h4>
-        <ul>
-        <?php if (Plugin::isLoaded('DebugKit')) : ?>
-            <li class="bullet success">DebugKit is loaded.</li>
-        <?php else : ?>
-            <li class="bullet problem">DebugKit is NOT loaded. You need to either install pdo_sqlite, or define the "debug_kit" connection name.</li>
-        <?php endif; ?>
-        </ul>
-    </div>
-    <hr />
-</div>
-
-<div class="row">
-    <div class="columns large-6">
-        <h3>Editing this Page</h3>
-        <ul>
-            <li class="bullet cutlery">To change the content of this page, edit: src/Template/Pages/home.ctp.</li>
-            <li class="bullet cutlery">You can also add some CSS styles for your pages at: webroot/css/.</li>
-        </ul>
-    </div>
-    <div class="columns large-6">
-        <h3>Getting Started</h3>
-        <ul>
-            <li class="bullet book"><a target="_blank" href="https://book.cakephp.org/3.0/en/">CakePHP 3.0 Docs</a></li>
-            <li class="bullet book"><a target="_blank" href="https://book.cakephp.org/3.0/en/tutorials-and-examples/cms/installation.html">The 20 min CMS Tutorial</a></li>
-        </ul>
-    </div>
-</div>
-
-<div class="row">
-    <div class="columns large-12 text-center">
-        <h3 class="more">More about Cake</h3>
-        <p>
-            CakePHP is a rapid development framework for PHP which uses commonly known design patterns like Front Controller and MVC.<br />
-            Our primary goal is to provide a structured framework that enables PHP users at all levels to rapidly develop robust web applications, without any loss to flexibility.
-        </p>
-    </div>
-    <hr/>
-</div>
-
-<div class="row">
-    <div class="columns large-4">
-        <i class="icon support">P</i>
-        <h3>Help and Bug Reports</h3>
-        <ul>
-            <li class="bullet cutlery">
-                <a href="irc://irc.freenode.net/cakephp">irc.freenode.net #cakephp</a>
-                <ul><li>Live chat about CakePHP</li></ul>
-            </li>
-            <li class="bullet cutlery">
-                <a href="http://cakesf.herokuapp.com/">Slack</a>
-                <ul><li>CakePHP Slack support</li></ul>
-            </li>
-            <li class="bullet cutlery">
-                <a href="https://github.com/cakephp/cakephp/issues">CakePHP Issues</a>
-                <ul><li>CakePHP issues and pull requests</li></ul>
-            </li>
-            <li class="bullet cutlery">
-                <a href="http://discourse.cakephp.org/">CakePHP Forum</a>
-                <ul><li>CakePHP official discussion forum</li></ul>
-            </li>
-        </ul>
-    </div>
-    <div class="columns large-4">
-        <i class="icon docs">r</i>
-        <h3>Docs and Downloads</h3>
-        <ul>
-            <li class="bullet cutlery">
-                <a href="https://api.cakephp.org/3.0/">CakePHP API</a>
-                <ul><li>Quick Reference</li></ul>
-            </li>
-            <li class="bullet cutlery">
-                <a href="https://book.cakephp.org/3.0/en/">CakePHP Documentation</a>
-                <ul><li>Your Rapid Development Cookbook</li></ul>
-            </li>
-            <li class="bullet cutlery">
-                <a href="https://bakery.cakephp.org">The Bakery</a>
-                <ul><li>Everything CakePHP</li></ul>
-            </li>
-            <li class="bullet cutlery">
-                <a href="https://plugins.cakephp.org">CakePHP plugins repo</a>
-                <ul><li>A comprehensive list of all CakePHP plugins created by the community</li></ul>
-            </li>
-            <li class="bullet cutlery">
-                <a href="https://github.com/cakephp/">CakePHP Code</a>
-                <ul><li>For the Development of CakePHP Git repository, Downloads</li></ul>
-            </li>
-            <li class="bullet cutlery">
-                <a href="https://github.com/FriendsOfCake/awesome-cakephp">CakePHP Awesome List</a>
-                <ul><li>A curated list of amazingly awesome CakePHP plugins, resources and shiny things.</li></ul>
-            </li>
-            <li class="bullet cutlery">
-                <a href="https://www.cakephp.org">CakePHP</a>
-                <ul><li>The Rapid Development Framework</li></ul>
-            </li>
-        </ul>
-    </div>
-    <div class="columns large-4">
-        <i class="icon training">s</i>
-        <h3>Training and Certification</h3>
-        <ul>
-            <li class="bullet cutlery">
-                <a href="https://cakefoundation.org/">Cake Software Foundation</a>
-                <ul><li>Promoting development related to CakePHP</li></ul>
-            </li>
-            <li class="bullet cutlery">
-                <a href="https://training.cakephp.org/">CakePHP Training</a>
-                <ul><li>Learn to use the CakePHP framework</li></ul>
-            </li>
-            <li class="bullet cutlery">
-                <a href="https://certification.cakephp.org/">CakePHP Certification</a>
-                <ul><li>Become a certified CakePHP developer</li></ul>
-            </li>
-        </ul>
-    </div>
-</div>
-
-</body>
-</html>
+        else if(video_sort == 'Playlist'){
+            player = new YT.Player('player', {
+                /*videoId: '<?php //echo $video['Video']['video_url'] ?>',*/
+                    playerVars: {
+                        listType:'playlist',
+                        list: '<?php echo $video['Video']['video_url_playlist'] ?>'
+                       /* playlist:     '<?php //echo $video['Video']['video_url_part_two'] . ',' . $video['Video']['video_url_part_three'] . ',' . $video['Video']['video_url_part_four'] . ',' . $video['Video']['video_url_part_five'] . ',' . $video['Video']['video_url_part_six'] . ',' . $video['Video']['video_url_part_seven'] . ',' . $video['Video']['video_url_part_eight'] . ',' . $video['Video']['video_url_part_nine'] . ',' . $video['Video']['video_url_part_ten'] ?>'*/
+                                    
+                    }
+            });
+        }
+    }
+</script>

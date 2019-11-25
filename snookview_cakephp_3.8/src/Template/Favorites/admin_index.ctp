@@ -34,7 +34,7 @@
 				<?php foreach ($favorites as $favorite): ?>
 					<tr>
 						<td>
-							<?php echo $this->Html->link($favorite->favorite_id, ['action' => 'view', $favorite->favorite_id]); ?>
+							<?php echo $this->Html->link($favorite->favorite_id, ['action' => 'adminView', $favorite->favorite_id]); ?>
 						</td>
 						<td>
 							<a href="../../users/view/<?php echo $favorite->user->user_id; ?>">
@@ -51,18 +51,14 @@
 						<td class="actions">
 							<?php echo $this->Html->link(
 								$this->Html->tag('i', '', ['class' => 'glyphicon glyphicon-edit']) . "",
-									['action' => 'edit', $favorite->favorite_id],
+									['action' => 'adminEdit', $favorite->favorite_id],
 									['class' => 'btn btn-mini btn-noPadding', 'escape' => false]
 								);
 							?>
-							<?php echo $this->Form->postLink(
-								$this->Html->tag('i', '', ['class' => 'glyphicon glyphicon-remove']). "",
-									['action' => 'delete', $favorite->favorite_id],
-									['escape'=>false],
-									__('Are you sure you want to delete %s?', $favorite->video->video_title),
-									['class' => 'btn btn-mini btn-noPadding']
-								);
-							?>
+							<?php echo $this->element('deleteAction', array(
+								"idDeleteAction" 		=> $favorite->favorite_id,
+								"displayDeleteAction" 	=> 'the favorite ' . $favorite->video->video_title
+							)); ?>
 						</td>
 					</tr>
 				<?php endforeach; ?>

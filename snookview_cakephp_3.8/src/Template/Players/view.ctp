@@ -21,7 +21,7 @@
 	<div class="col-md-1"></div>
 	<div class="col-md-4 noPaddingTablet noPaddingMobile">
 		<?php if(!empty($player['player_image'])): {
-			echo $this->Html->image($player['player_image'], array('class' => 'img-responsive img-center padding-bottom', 'alt' => $player['player_firstname'] . ' ' . $player['player_surname']));
+			echo $this->Html->image('/img/players/' . $player['player_image'], array('class' => 'img-responsive img-center padding-bottom', 'alt' => $player['player_firstname'] . ' ' . $player['player_surname']));
 		}  ?>
 		<?php else: {
 			echo $this->Html->image('/img/players/Profile.jpg', array('class' => 'img-responsive img-center padding-bottom', 'alt' => $player['player_firstname'] . ' ' . $player['player_surname']));
@@ -67,7 +67,7 @@
 									<ul class="video_player">
 										<?php foreach ($video->players as $player): ?>
 											<li><?php if($player->player_id != $thisplayer) echo $player->player_firstname . ' ' . $player->player_surname; ?></li>
-											<li><?php if($player->player_image && $player->player_id != $thisplayer) echo $this->Html->image($player->player_image, array('class' => 'img-responsive thumbMiddle', 'alt' => $player->player_firstname . ' ' . $player->player_surname)); ?></li>
+											<li><?php if($player->player_image && $player->player_id != $thisplayer) echo $this->Html->image('/img/players/' . $player->player_image, array('class' => 'img-responsive thumbMiddle', 'alt' => $player->player_firstname . ' ' . $player->player_surname)); ?></li>
 										<?php endforeach; ?>
 											<!-- <li><?php //echo $video['video_part']; ?></li> -->
 									</ul>

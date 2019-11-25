@@ -67,7 +67,7 @@
 				<?php foreach ($items as $item): ?>
 					<tr>
 						<td>
-							<?php echo $this->Html->link($item->item_id, ['action' => 'view', $item->item_id]); ?>
+							<?php echo $this->Html->link($item->item_id, ['action' => 'adminView', $item->item_id]); ?>
 						</td>
 						<td>
 							<?php echo h($item->item_title); ?>
@@ -114,17 +114,13 @@
 						<td class="actions">
 							<?php echo $this->Html->link(
 								$this->Html->tag('i', '', ['class' => 'glyphicon glyphicon-edit']) . "",
-									['action' => 'edit', $item->item_id],
+									['action' => 'adminEdit', $item->item_id],
 									['class' => 'btn btn-mini btn-noPadding', 'escape' => false]
 							); ?>
-							<?php echo $this->Form->postLink(
-								$this->Html->tag('i', '', ['class' => 'glyphicon glyphicon-remove']). "",
-									['action' => 'delete', $item->item_id],
-									['escape'=>false],
-									__('Are you sure you want to delete %s?', $item->item_title),
-									['class' => 'btn btn-mini btn-noPadding']
-								);
-							?>
+							<?php echo $this->element('deleteAction', array(
+								"idDeleteAction" 		=> $item->item_id,
+								"displayDeleteAction" 	=> $item->item_title
+							)); ?>
 						</td>
 					</tr>
 				<?php endforeach; ?>

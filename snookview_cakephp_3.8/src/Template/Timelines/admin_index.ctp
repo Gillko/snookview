@@ -38,7 +38,7 @@
 				<?php foreach ($timelines as $timeline): ?>
 					<tr>
 						<td>
-							<?php echo $this->Html->link($timeline->timeline_id, ['action' => 'view', $timeline->timeline_id]); ?>
+							<?php echo $this->Html->link($timeline->timeline_id, ['action' => 'adminView', $timeline->timeline_id]); ?>
 						</td>
 						<td>
 							<?php echo h($timeline->timeline_title); ?>
@@ -54,18 +54,16 @@
 						</td>
 						<td class="actions">
 							<?php echo $this->Html->link(
-								$this->Html->tag('i', '', ['class' => 'glyphicon glyphicon-edit']) . "",
-									['action' => 'edit', $timeline->timeline_id],
+								$this->Html->tag('i', '', 
+									['class' => 'glyphicon glyphicon-edit']) . "",
+									['action' => 'adminEdit', $timeline->timeline_id],
 									['class' => 'btn btn-mini btn-noPadding', 'escape' => false]
 								); 
 							?>
-							<?php echo $this->Form->postLink(
-								$this->Html->tag('i', '', array('class' => 'glyphicon glyphicon-remove')). "",
-									['action' => 'delete', $timeline->timeline_id],
-									['escape'=>false],
-									__('Are you sure you want to delete %s?', $timeline['Timeline']['timeline_title']), ['class' => 'btn btn-mini btn-noPadding']
-								);
-							?>
+							<?php echo $this->element('deleteAction', array(
+								"idDeleteAction" 		=> $timeline->timeline_id,
+								"displayDeleteAction" 	=> $timeline->timeline_title
+							)); ?>
 						</td>
 					</tr>
 				<?php endforeach; ?>

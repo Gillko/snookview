@@ -25,9 +25,9 @@
 			</div>
 			<div class="form-group">
 				<?php
-					echo $this->Form->control('user_surname', [
-						'label' => 'Surname',
-						'placeholder' => 'Surname',
+					echo $this->Form->control('user_lastname', [
+						'label' => 'Lastname',
+						'placeholder' => 'Lastname',
 						'class' => 'form-control'
 					]);
 				?>
@@ -62,7 +62,7 @@
 			</div>
 			<div class="form-group">
 				<?php
-					echo $this->Form->control('user_password', [
+					echo $this->Form->control('password', [
 						'label' => 'Password',
 						'placeholder' => 'Password',
 						'type' => 'password',

@@ -26,141 +26,9 @@
 	<div class="col-md-1"></div>
 	<div class="col-md-10 noPaddingMobile noPaddingTablet">
 		<h3><?php echo $video->tournament['tournament_name'] . ' ' . $video->tournament['tournament_year'] . '<br/>' . $video->round['round_name'] . '<br/>' . $video['video_title'] . '<br/>' ?><?php if(($video->session['session_title']) != 'Part One'): echo $video->session['session_title'];?><?php endif; ?></h3>
-
 		<div class="video-container">
-			<!-- <div id="player">
-			</div> -->
-
 			<iframe id="video-vimeo" src="https://player.vimeo.com/video/<?php echo $video['video_url'] ?>" width="640" height="360" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
 		</div>
-		<script>
-		/*var tag = document.createElement('script');
-        tag.src = "https://www.youtube.com/player_api";
-        var firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-        var player;
-        var video_sort = '<?php //echo $video['video_sort'] ?>';*/
-        /*console.log(video_sort);*/
-       /* function onYouTubePlayerAPIReady() {
-        	if(video_sort == 'Single'){
-        		player = new YT.Player('player', {
-        			videoId: '<?php //echo $video['video_url'] ?>'
-    		  });
-        	}
-    		else if(video_sort == 'Playlist'){
-    			player = new YT.Player('player', {
-    				/*videoId: '<?php //echo $video['Video']['video_url'] ?>',*/
-        			//playerVars: {
-        				//listType:'playlist',
-            			//list: '<?php //echo $video['video_url_playlist'] ?>'*/
-			           /* playlist: '<?php //echo $video['Video']['video_url_part_two'] . ',' . $video['Video']['video_url_part_three'] . ',' . $video['Video']['video_url_part_four'] . ',' . $video['Video']['video_url_part_five'] . ',' . $video['Video']['video_url_part_six'] . ',' . $video['Video']['video_url_part_seven'] . ',' . $video['Video']['video_url_part_eight'] . ',' . $video['Video']['video_url_part_nine'] . ',' . $video['Video']['video_url_part_ten'] ?>'*/
-			            			
-			     /*   }
-		    	});
-		    }
-        }*/
-        /*$(function() {
-		    $(document).on('click', '#btnSeek', function() {
-		    	if(video_sort == 'Single'){
-			    	$('html, body').animate({ scrollTop: 250 }, 'fast');
-			        player.seekTo($(this).data('seek'), true);
-			    } else if(video_sort == 'Playlist'){
-			    	if($(this).hasClass('part-one')){
-			    		player.playVideoAt(0);
-			    	}
-			    	if($(this).hasClass('part-two')){
-			    		player.playVideoAt(1);
-			    	}
-			    	if($(this).hasClass('part-three')){
-			    		player.playVideoAt(2);
-			    	}
-			    	if($(this).hasClass('part-four')){
-			    		player.playVideoAt(3);
-			    	}
-			    	if($(this).hasClass('part-five')){
-			    		player.playVideoAt(4);
-			    	}
-			    	if($(this).hasClass('part-six')){
-			    		player.playVideoAt(5);
-			    	}
-			    	if($(this).hasClass('part-seven')){
-			    		player.playVideoAt(6);
-			    	}
-			    	if($(this).hasClass('part-eight')){
-			    		player.playVideoAt(7);
-			    	}
-			    	if($(this).hasClass('part-nine')){
-			    		player.playVideoAt(8);
-			    	}
-			    	if($(this).hasClass('part-ten')){
-			    		player.playVideoAt(9);
-			    	}
-			    	if($(this).hasClass('part-eleven')){
-			    		player.playVideoAt(10);
-			    	}
-			    	if($(this).hasClass('part-twelve')){
-			    		player.playVideoAt(11);
-			    	}
-			    	if($(this).hasClass('part-thirteen')){
-			    		player.playVideoAt(12);
-			    	}
-			    	if($(this).hasClass('part-fourteen')){
-			    		player.playVideoAt(13);
-			    	}
-			    	if($(this).hasClass('part-fifteen')){
-			    		player.playVideoAt(14);
-			    	}
-			    	if($(this).hasClass('part-sixteen')){
-			    		player.playVideoAt(15);
-			    	}
-			    	if($(this).hasClass('part-seventeen')){
-			    		player.playVideoAt(16);
-			    	}
-			    	if($(this).hasClass('part-eighteen')){
-			    		player.playVideoAt(17);
-			    	}
-			    	if($(this).hasClass('part-nineteen')){
-			    		player.playVideoAt(18);
-			    	}
-			    	if($(this).hasClass('part-twenty')){
-			    		player.playVideoAt(19);
-			    	}
-			    	if($(this).hasClass('part-twenty-one')){
-			    		player.playVideoAt(20);
-			    	}
-			    	if($(this).hasClass('part-twenty-two')){
-			    		player.playVideoAt(21);
-			    	}
-			    	if($(this).hasClass('part-twenty-three')){
-			    		player.playVideoAt(22);
-			    	}
-			    	if($(this).hasClass('part-twenty-four')){
-			    		player.playVideoAt(23);
-			    	}
-			    	if($(this).hasClass('part-twenty-five')){
-			    		player.playVideoAt(24);
-			    	}
-			    	if($(this).hasClass('part-twenty-six')){
-			    		player.playVideoAt(25);
-			    	}
-			    	if($(this).hasClass('part-twenty-seven')){
-			    		player.playVideoAt(26);
-			    	}
-			    	if($(this).hasClass('part-twenty-eight')){
-			    		player.playVideoAt(27);
-			    	}
-			    	if($(this).hasClass('part-twenty-nine')){
-			    		player.playVideoAt(28);
-			    	}
-			    	if($(this).hasClass('part-thirty')){
-			    		player.playVideoAt(29);
-			    	}
-			    	$('html, body').animate({ scrollTop: 250 }, 'fast');
-			        player.seekTo($(this).data('seek'), true);
-			    }
-		    });
-		});*/
-		</script>
 		<div class="matchinformation">
 			<ul>
 				<li>
@@ -213,118 +81,41 @@
 				$myString = $video['video_url'];
 				$myArray = explode(',', $myString);
 			?>
-			<?php //if(!empty($items)): ?>
-				<h3><?php echo 'Timeline' ?></h3>
+			<h3><?php echo 'Timeline' ?></h3>
+			<?php foreach ($items as $index => $item): ?>
+				<?php if(!empty($item->timeline->items)): ?>
+					<?php  
+						$countItems = count($item->timeline->items);
 
-				<!-- <?php //foreach ($items as $index => $item): ?>
-					<?php //debug($item); ?>
-					<?php //if(!empty($item->timeline->items)): ?>
-						<?php
-							//$countItems = count($item->timeline->items);
-
-							//for ($index = 0; $index < $countItems; $index++) { ?>
-								<p><?php //echo h($item->timeline->items[$index]['item_id']); ?></p>
-								<p><?php //echo h($item->timeline->items[$index]['item_title']); ?></p>
-								<p><?php //echo h($item->timeline->items[$index]['item_description']); ?></p>
-								<p><?php //echo h($item->timeline->items[$index]['item_part']); ?></p>
-						<?php //} ?>
-
-						<?php //else: 
-							//echo '<h3>Timeline</h3><div class="row"><div class="col-md-12 noPadding"><div class="box text-center coming"><p>No timeline items have yet been added! <br/>Please <a href="/contact"><i>contact</i></a> me if you want me to add a nice moment throughout the match!<br/>Or ask me to give you permission to add timeline items yourself.</p></div></div></div>';
-						?>
-						<?php //endif ?>
-						<p><?php //echo h(implode($item->timeline->items)); ?></p>
-				<?php //endforeach; ?> -->
-					
-				<?php foreach ($items as $index => $item): ?>
-
-					<?php if(!empty($item->timeline->items)): ?>
-
-						<?php  
-							$countItems = count($item->timeline->items);
-
-							for ($index = 0; $index < $countItems; $index++) { 
-						?>
+						for ($index = 0; $index < $countItems; $index++) { 
+					?>
 						<script src="https://player.vimeo.com/api/player.js"></script>
 
 						<script>
-
-							 function reply_click(clicked_id){
-							     //alert(clicked_id);
-
-							      var timelineItem = clicked_id;
-
-							      console.log(clicked_id);
-
-							      /*var iframe = document.getElementById('video');
-							      var player = $f(iframe);
-							      player.addEvent("pause");*/
-
-							      $('html, body').animate({ scrollTop: 250 }, 'fast');
-			        			//player.seekTo($(this).data('seek'), true);
-			        				//$('#video-vimeo').attr('src', 'https://player.vimeo.com/video/249019733?autoplay=1');
-							      	//$('#video-vimeo').attr('src', clicked_id);
-
-							      	//location.reload();
-
-							      	var iframe = document.getElementById('video-vimeo');
-
-							      	var player = new Vimeo.Player(iframe);
-							      	//player.loadVideo(clicked_id);
-
-
-							      	//player.play().then(function() {
-									  player.pause().then(function() {
-									    player.setCurrentTime(clicked_id);
-
-									  });
-									  player.play();
-									//});
-
-							  }
-
-							
-
-
-
-							/*$('.item-description').click(function(identifier) {
-
-								console.log("data:"+$(identifier).data('data'));    */  
-
-
-
-								//console.log('test');
-							    //var test = 'https://player.vimeo.com/video/<?php //echo $video['video_url_playlist'] ?>?autoplay=1#t=<?php //echo $item->timeline->items[$index]['item_minutes_start'] ?>m<?php //echo $item->timeline->items[$index]['item_seconds_start'] ?>s';
-							    //$('#videovideo').attr('src', test);
-							    //console.log('click');
-
-						 /*  });*/
+							function reply_click(clicked_id){
+								var timelineItem = clicked_id;
+								//console.log(clicked_id);
+								$('html, body').animate({ scrollTop: 250 }, 'fast');
+								var iframe = document.getElementById('video-vimeo');
+								var player = new Vimeo.Player(iframe);
+								player.pause().then(function() {
+									player.setCurrentTime(clicked_id);
+								});
+								player.play();
+							}
 						</script>
-
-								<!-- <a class="testtest" href="https://player.vimeo.com/video/<?php //echo $video['video_url_playlist'] ?>?autoplay=1#t=<?php //echo $item->timeline->items[$index]['item_minutes_start'] ?>m<?php //echo $item->timeline->items[$index]['item_seconds_start'] ?>s">Go to</a> -->
-
-
-				        	<div class="item">
-				        		<ul>
-
-				        			<li onClick="reply_click(this.id)" class="item-description <?php echo h($item->timeline->items[$index]['item_part']); ?>" data-seek="<?php echo h($item->timeline->items[$index]['item_point_start']); ?>" id="<?php echo $item->timeline->items[$index]['item_point_start'] ?>"><?php echo h($item->timeline->items[$index]['item_description']); ?></li>
-
-
-				                	<!-- <li class="item-description <?php //echo h($item->timeline->items[$index]['item_part']); ?>" id="btnSeek" data-seek="<?php //echo h($item->timeline->items[$index]['item_point_start']); ?>"><?php //echo h($item->timeline->items[$index]['item_description']); ?></li> -->
-									
-								</ul>
-				           </div>
-		           		<?php } ?>
-					<?php else: 
-						echo '<div class="row"><div class="col-md-12 noPadding"><div class="box text-center coming"><p>No timeline items have yet been added! <br/>Please <a href="/contact"><i>contact</i></a> me if you want me to add a nice moment throughout the match!<br/>Or ask me to give you permission to add timeline items yourself.</p></div></div></div>';
-					?>
-					<?php endif ?>
-	        	<?php endforeach; ?>
-				<?php //else:
-					//echo '<h3>Timeline</h3><div class="row"><div class="col-md-12 noPadding"><div class="box text-center coming"><p>No timeline items have yet been added! <br/>Please <a href="/contact"><i>contact</i></a> me if you want me to add a nice moment throughout the match!<br/>Or ask me to give you permission to add timeline items yourself.</p></div></div></div>';
-				 ?>
-				<?php //endif; ?>
-        </div>
+						<div class="item">
+							<ul>
+								<li onClick="reply_click(this.id)" class="item-description <?php echo h($item->timeline->items[$index]['item_part']); ?>" data-seek="<?php echo h($item->timeline->items[$index]['item_point_start']); ?>" id="<?php echo $item->timeline->items[$index]['item_point_start'] ?>"><?php echo h($item->timeline->items[$index]['item_description']); ?></li>
+							</ul>
+						</div>
+					<?php } ?>
+				<?php else: 
+					echo '<div class="row"><div class="col-md-12 noPadding"><div class="box text-center coming"><p>No timeline items have yet been added!</p></div></div></div>';
+				?>
+				<?php endif ?>
+			<?php endforeach; ?>
+		</div>
 		<div class="comments-container">
 			<h4><?php echo __('All Comments'); ?></h4>
 				<?php echo $this->Form->create('Comment', array(
@@ -362,7 +153,6 @@
 						echo $this->Form->end();
 					?>
 				</fieldset>
-				<?php //echo $this->Form->end(array('label' => __('Comment', true), 'class' => 'btn btn-default btn-success btn-lg', 'name' => 'comment')); ?>
 			<div class="comments">
 				<?php foreach ($comments as $comment): ?>
 					<?php if($comment['User']['user_id'] == $current_user['user_id']): ?>
@@ -380,15 +170,15 @@
 								<li><?php echo $comment['Comment']['comment_body']; ?>
 								<?php echo $this->Form->postLink(
 								   $this->Html->tag('i', '', array('class' => 'glyphicon glyphicon-remove')). "",
-								        array('controller' => 'comments', 'action' => 'delete', $comment['Comment']['comment_id']),
-								        array('escape'=>false),
-								    __('Are you sure you want to delete %s?', $comment['Comment']['comment_body']),
+										array('controller' => 'comments', 'action' => 'delete', $comment['Comment']['comment_id']),
+										array('escape'=>false),
+									__('Are you sure you want to delete %s?', $comment['Comment']['comment_body']),
 								   array('class' => 'btn btn-mini')
 								); ?>
 								<?php echo $this->Html->link(
-								    $this->Html->tag('i', '', array('class' => 'glyphicon glyphicon-edit')) . "",
-								    array('controller' => 'comments', 'action' => 'edit', $comment['Comment']['comment_id']),
-								    array('class' => '', 'escape' => false)
+									$this->Html->tag('i', '', array('class' => 'glyphicon glyphicon-edit')) . "",
+									array('controller' => 'comments', 'action' => 'edit', $comment['Comment']['comment_id']),
+									array('class' => '', 'escape' => false)
 								); ?></li>	
 							</ul>
 						</div>

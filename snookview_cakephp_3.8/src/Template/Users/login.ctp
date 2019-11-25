@@ -6,37 +6,46 @@
 	</div>
 	<div class="col-md-10">
 		<h3 class="left"><?php echo __('Login'); ?></h3>
-		<?php echo $this->Form->create('User', array(
-			'inputDefaults' => array(
-			'div' => 'form-group',
-			'wrapInput' => false,
-			'class' => 'form-control'
-		),
-			'class' => 'well noBackground noPadding',
-			'type' => 'file',
-		)); ?>
+		<?php echo $this->Flash->render() ?>
+		<?php echo $this->Form->create(); ?>
 		<fieldset>
+			<div class="form-group">
+				<?php
+					echo $this->Form->control('email', array(
+						'label' => 'Email',
+						'placeholder' => 'Email',
+						'class' => 'form-control'
+					));
+				?>
+			</div>
+			<div class="form-group">
+				<?php
+					echo $this->Form->control('password', array(
+						'label' => 'Password',
+						'placeholder' => 'Password',
+						'type' => 'password',
+						'class' => 'form-control'
+					));
+				?>
+			</div>
+			<div class="form-group">
+				<?php
+					echo $this->Form->control('user_lastlogin', array(
+						'type' => 'hidden',
+						'class' => 'form-control date'
+					));
+				?>
+			</div>
+			<div class="submit">
+				<?php
+					echo $this->Form->button(__('Login'), ['class'=> 'btn btn-default btn-success btn-lg']);
+				?>
+			</div>
 			<?php
-				echo $this->Form->control('email', array(
-					'label' => 'Email',
-					'placeholder' => 'Email',
-				));
-				echo $this->Form->control('user_password', array(
-					'label' => 'Password',
-					'placeholder' => 'Password',
-					'type' => 'password',
-				));
-				echo $this->Form->control('user_lastlogin', array(
-					'type' => 'hidden',
-					'class' => 'form-control date'
-				));
+				echo $this->Form->end();
 			?>
 		</fieldset>
-		<?php echo $this->Html->div('unforseen-container'); ?>
-			<?php echo $this->Form->end(array('label' => __('Login', true), 'class' => 'btn btn-default btn-success btn-lg btn-login')); ?>
-			<?php echo $this->Html->div('unforseen'); ?>
-			<?php echo '</div>'; ?>
-		<?php echo '</div>'; ?>
+		
 	</div>
 	<div class="col-md-1">
 	</div>

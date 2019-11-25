@@ -4,39 +4,75 @@
 <div class="row">
 	<div class="col-md-3">
 		<ul class="nav nav-pills nav-stacked">
-			<li><?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $this->Form->value('Round.round_id')), null, __('Are you sure you want to delete %s?', $this->Form->value('Round.round_name'))); ?></li>
+			<li>
+				<?= 
+					$this->Form->postLink(
+					    'Delete',[
+					    	'action' => 'delete', $round->round_id
+					    ],
+					    [
+					    	'confirm' => 'Are you sure?'
+					    ]
+					)
+				?>
+				<?php
+					echo $this->Form->end();
+				?>
+				<?php //echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $this->Form->value('Round.round_id')), null, __('Are you sure you want to delete %s?', $this->Form->value('Round.round_name'))); ?>
+			</li>
 		</ul>
 	</div>
 
 	<div class="col-md-9">
-		<?php echo $this->Form->create('Round', array(
-			'inputDefaults' => array(
-			'div' => 'form-group',
-			'wrapInput' => false,
-			'class' => 'form-control'
-		),
+		<?php echo $this->Form->create($round->round_id, [
+			'inputDefaults' => [
+				'div' => 'form-group',
+				'wrapInput' => false,
+				'class' => 'form-control'
+			],
 			'class' => 'well'
-		)); 
-		?>
+		]); ?>
 		<fieldset>
 			<legend><?php echo __('Edit Round'); ?></legend>
-		<?php
-			echo $this->Form->input('round_id');
-			echo $this->Form->input('round_name', array(
-				'label' => 'Name'
-			));
-			echo $this->Form->input('round_slug', array(
-				'label' => 'Slug',
-				'placeholder' => 'Slug',
-				));
-			echo $this->Form->input('round_route', array(
-				'label' => 'URL route',
-				'placeholder' => 'URL route',
-			));
-			echo $this->Form->input('tournament_id');
-		?>
+			<div class="form-group">
+				<?php
+					echo $this->Form->control('round_name', [
+						'label' => 'Name',
+						'class' => 'form-control',
+						'value' => $round->round_name,
+						'id' => 'RoundRoundName'
+					]);
+				?>
+			</div>
+			<div class="form-group">
+				<?php
+					echo $this->Form->control('round_slug', [
+						'label' => 'Slug',
+						'placeholder' => 'Slug',
+						'class' => 'form-control',
+						'value' => $round->round_slug,
+						'id' => 'RoundRoundSlug'
+					]);
+				?>
+			</div>
+			<div class="form-group">
+				<?php
+					echo $this->Form->input('tournament_id', [
+						'class' => 'form-control',
+						'value' => $round->tournament_id,
+						'id' => 'RoundTournamentId'
+					]);
+				?>
+			</div>
+			<div class="submit">
+				<?php
+					echo $this->Form->button(__('Edit'), ['class'=> 'btn btn-default btn-success btn-lg']);
+				?>
+			</div>
+			<?php
+				echo $this->Form->end();
+			?>
 		</fieldset>
-		<?php echo $this->Form->end(array('label' => __('Edit', true), 'class' => 'btn btn-default btn-success btn-lg')); ?>
 	</div>
 </div>
 <script>
@@ -49,7 +85,16 @@ $('#RoundRoundName').bind('keypress blur', function() {
 		);
 });
 
-$('#RoundRoundSlug').bind('keypress blur', function() {
-	$('#RoundRoundRoute').val('Router::connect("/rounds/' + $('#RoundRoundSlug').val() + '", array("controller" => "rounds", "action" => "view", ' + $('#RoundRoundId').val() +'));');
+$('#RoundTournamentId').click(function() {
+	$('#RoundRoundSlug').val(
+		$('#RoundTournamentId option:selected').text().toLowerCase().replace(
+			/['"’\s]/g, '-') + '/' +
+		$('#RoundRoundName').val().toLowerCase().replace(
+			/['"’\s]/g, '-')
+		);
 });
+
+/*$('#RoundRoundSlug').bind('keypress blur', function() {
+	$('#RoundRoundRoute').val('Router::connect("/rounds/' + $('#RoundRoundSlug').val() + '", array("controller" => "rounds", "action" => "view", ' + $('#RoundRoundId').val() +'));');
+});*/
 </script>

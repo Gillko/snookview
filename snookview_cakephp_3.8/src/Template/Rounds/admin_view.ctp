@@ -2,24 +2,24 @@
 	<title>Snookview - View Round</title>
 <?php $this->end(); ?>
 <?php echo $this->element('viewActions', array(
-	"list" => ' List Rounds',
-	"edit" => ' Edit Round',
-	"delete" => ' Delete Round',
-	"id" => $round['Round']['round_id'],
-	"display" => $round['Round']['round_name']
+	"list" 		=> ' List Rounds',
+	"edit" 		=> ' Edit Round',
+	"delete" 	=> ' Delete Round',
+	"id" 		=> $round->round_id,
+	"display" 	=> $round->round_name
 )); ?>
 <div class="table-responsive">
 	<table class="table table-striped table-bordered">
 		<tr>
-			<th><?php echo __('ID'); ?></th>
-			<th><?php echo __('Name'); ?></th>
-			<th><?php echo __('Tournament'); ?></th>
+			<th><?php echo __('ID'			); ?></th>
+			<th><?php echo __('Name'		); ?></th>
+			<th><?php echo __('Tournament'	); ?></th>
 		</tr>
 		<tr>
-			<td><?php echo h($round['Round']['round_id']); ?>&nbsp;</td>
-			<td><?php echo h($round['Round']['round_name']); ?>&nbsp;</td>
+			<td><?php echo $round->round_id 	?></td>
+			<td><?php echo $round->round_name 	?></td>
 			<td>
-				<?php echo $this->Html->link($round['Tournament']['tournament_name'] . ' ' . $round['Tournament']['tournament_year'], array('controller' => 'tournaments', 'action' => 'view', $round['Tournament']['tournament_id'])); ?>
+				<?php echo $this->Html->link($round->tournament->tournament_name . ' ' . $round->tournament->tournament_year, ['controller' => 'tournaments', 'action' => 'adminView', $round->tournament->tournament_id]); ?>
 			</td>
 		</tr>
 	</table>

@@ -8,145 +8,162 @@ use Cake\Event\Event;
  * Timelines Controller
  *
  * @property Timeline $Timeline
- * @property SessionComponent $Session
  */
 class TimelinesController extends AppController {
 
 	/*Pagination*/
 	public $paginate = [
-        'limit' => 25,
-        'order' => [
-            'Timelines.timeline_id' => 'desc'
-        ]
-    ];
+		'limit' => 25,
+		'order' => [
+			'Timelines.timeline_id' => 'desc'
+		]
+	];
+	 /*Pagination*/
 
-    public function initialize()
-    {
-        parent::initialize();
-        $this->loadComponent('Paginator');
-    }
-    /*Pagination*/
+	public function initialize() {
+		parent::initialize();
+		$this->loadComponent('Paginator');
+	}
 
 	public function beforeFilter(Event $event) {
-		//$this->Auth->allow('index', 'view');
 		$this->Auth->allow(
 			[
-				'adminAdd',
-				'adminIndex'
+				/*'adminAdd',
+				'adminEdit',
+				'adminIndex',
+				'adminView',
+				'adminDelete'*/
 			]
 		);
 	}
 
-/**
- * Helpers
- *
- * @var array
- */
-	public $helpers = array('Session');
-
-/**
- * admin_index method
- *
- * @return void
- */
+	/**
+	 * admin_index method
+	 *
+	 * @return void
+	 */
 	public function adminIndex() {
-		/*$this->layout = 'layout_back';
-		$this->Timeline->recursive = 0;
-		$this->Paginator->settings = $this->paginate;
-		$this->set('timelines', $this->Paginator->paginate());*/
-
 		$this->viewBuilder()->setLayout('layout_back');
-	    $timelines = $this->paginate($this->Timelines, [
-	    	'contain' => 'Videos'
-	    ]);
-        $this->set(
-        	compact(
-        		'timelines'
-        	)
-        );
+
+		$timelines = $this->paginate(
+			$this->Timelines, [
+				'contain' => 'Videos'
+			]
+		);
+
+		$this->set(
+			compact(
+				'timelines'
+			)
+		);
 	}
 
-/**
- * admin_view method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
-	public function admin_view($id = null) {
-		$this->layout = 'layout_back';
-		if (!$this->Timeline->exists($id)) {
+	/**
+	 * admin_view method
+	 *
+	 * @throws NotFoundException
+	 * @param string $id
+	 * @return void
+	 */
+	public function adminView($id = null) {
+		$this->viewBuilder()->setLayout('layout_back');
+
+		if (!$this->Timelines->exists($id)) {
 			throw new NotFoundException(__('Invalid timeline'));
 		}
-		$options = array('conditions' => array('Timeline.' . $this->Timeline->primaryKey => $id));
-		$this->set('timeline', $this->Timeline->find('first', $options));
+		
+		$timeline = $this->Timelines->get(
+			$id, [
+				'contain' => [
+					'Videos'
+				]
+			]
+		);
+		
+		$this->set(
+			compact(
+				'timeline'
+			)
+		);
 	}
 
-/**
- * admin_add method
- *
- * @return void
- */
+	/**
+	 * admin_add method
+	 *
+	 * @return void
+	 */
 	public function adminAdd() {
 		$this->viewBuilder()->setLayout('layout_back');
 
 		$timeline = $this->Timelines->newEntity();
 
 		if($this->request->is('post')) {
-            $timeline = $this->Timelines->patchEntity($timeline, $this->request->getData());
+			$timeline = $this->Timelines->patchEntity($timeline, $this->request->getData());
 
-            if($this->Timelines->save($timeline)) {
-                $this->Flash->success(__('Your timeline has been saved.'));
-                return $this->redirect(['action' => 'adminAdd']);
-            }
-            $this->Flash->error(__('Unable to add your timeline.'));
-        }
-        $this->set('timeline', $timeline);
-	}
+			if($this->Timelines->save($timeline)) {
+				$this->Flash->success(__('Your timeline has been saved.'));
 
-/**
- * admin_edit method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
-	public function admin_edit($id = null) {
-		$this->layout = 'layout_back';
-		if (!$this->Timeline->exists($id)) {
-			throw new NotFoundException(__('Invalid timeline'));
-		}
-		if ($this->request->is(array('post', 'put'))) {
-			if ($this->Timeline->save($this->request->data)) {
-				$this->Session->setFlash(__('The timeline has been saved.'));
-				return $this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The timeline could not be saved. Please, try again.'));
+				return $this->redirect(['action' => 'adminAdd']);
 			}
-		} else {
-			$options = array('conditions' => array('Timeline.' . $this->Timeline->primaryKey => $id));
-			$this->request->data = $this->Timeline->find('first', $options);
+			$this->Flash->error(__('Unable to add your timeline.'));
 		}
+		$this->set(
+			'timeline', $timeline
+		);
 	}
 
-/**
- * admin_delete method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
-	public function admin_delete($id = null) {
-		$this->layout = 'layout_back';
-		$this->Timeline->id = $id;
-		if (!$this->Timeline->exists()) {
-			throw new NotFoundException(__('Invalid timeline'));
+	/**
+	 * admin_edit method
+	 *
+	 * @throws NotFoundException
+	 * @param string $id
+	 * @return void
+	 */
+	public function adminEdit($id = null) {
+		$this->viewBuilder()->setLayout('layout_back');
+
+		$timeline = $this->Timelines->get(
+			$id, [
+				'contain' => [
+					'Videos'
+				]
+			]
+		);
+
+		if ($this->request->is(['patch', 'post', 'put'])) {
+			$timeline = $this->Timelines->patchEntity($timeline, $this->request->data);
+
+			if ($this->Timelines->save($timeline)) {
+				$this->Flash->success(__('The timeline has been updated.'));
+
+				return $this->redirect(['action' => 'adminIndex']);
+			} else {
+				$this->Flash->error(__('The timeline could not be updated. Please, try again.'));
+			}
 		}
-		$this->request->onlyAllow('post', 'delete');
-		if ($this->Timeline->delete()) {
-			$this->Session->setFlash(__('The timeline has been deleted.'));
-		} else {
-			$this->Session->setFlash(__('The timeline could not be deleted. Please, try again.'));
+		$this->set(
+			compact(
+				'timeline'
+			)
+		);
+	}
+
+	/**
+	 * admin_delete method
+	 *
+	 * @throws NotFoundException
+	 * @param string $id
+	 * @return void
+	 */
+	public function adminDelete($id) {
+		$this->request->allowMethod(['post', 'delete']);
+
+		$timeline = $this->Timelines->get($id);
+		
+		if ($this->Timelines->delete($timeline)) {
+			$this->Flash->success(__('The timeline with id: {0} has been deleted.', h($id)));
+
+			return $this->redirect(['action' => 'adminIndex']);
 		}
-		return $this->redirect(array('action' => 'index'));
-	}}
+	}
+}

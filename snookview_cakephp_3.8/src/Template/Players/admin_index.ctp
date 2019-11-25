@@ -71,7 +71,7 @@
 				<?php foreach ($players as $player): ?>
 					<tr>
 						<td>
-							<?php echo $this->Html->link($player->player_id, ['action' => 'view', $player->player_id]); ?>
+							<?php echo $this->Html->link($player->player_id, ['action' => 'adminView', $player->player_id]); ?>
 						</td>
 						<td>
 							<?php echo h($player->player_slug); ?>
@@ -95,7 +95,7 @@
 							<?php echo h($player->player_nationality); ?>
 						</td>
 						<td>
-							<?php if($player->player_flag) echo $this->Html->image(h($player->player_flag), ['class' => 'flag']); ?>
+							<?php if($player->player_flag) echo $this->Html->image('/img/flags/' . $player->player_flag, ['class' => 'flag']); ?>
 						</td>
 						<td>
 							<?php echo h($player->player_highestBreak); ?>
@@ -114,7 +114,7 @@
 						</td>
 						<td>
 							<?php if(!empty($player->player_image)):{
-								echo $this->Html->image(h($player->player_image), ['class' => 'thumb']);
+								echo $this->Html->image('/img/players/' . $player->player_image, ['class' => 'thumb']);
 							}
 							else:{
 								echo $this->Html->image('/img/users/profile.jpg', ['class' => 'thumb']);
@@ -127,16 +127,13 @@
 						<td class="actions">
 							<?php echo $this->Html->link(
 								$this->Html->tag('i', '', ['class' => 'glyphicon glyphicon-edit']), //. " Edit",
-									['action' => 'edit', $player->player_id],
+									['action' => 'adminEdit', $player->player_id],
 									['class' => 'btn btn-mini btn-noPadding', 'escape' => false]
 							); ?>
-							<?php echo $this->Form->postLink(
-								$this->Html->tag('i', '', ['class' => 'glyphicon glyphicon-remove']), //. " Delete",
-									['action' => 'delete', $player->player_id],
-									['class' => 'btn btn-mini btn-noPadding', 'escape'=>false],
-									__('Are you sure you want to delete %s?', $player->player_surname)
-								);
-							?>
+							<?php echo $this->element('deleteAction', array(
+								"idDeleteAction" 		=> $player->player_id,
+								"displayDeleteAction" 	=> $player->player_firstname . ' ' . $player->player_surname
+							)); ?>
 						</td>
 					</tr>
 				<?php endforeach; ?>

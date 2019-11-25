@@ -19,7 +19,7 @@
 							<a href="../../videos/<?php echo $video->video_id; ?>/<?php echo $video->video_slug; ?>">
 							<!-- <a href='/videos/view/<?php //echo $video['video_id']; ?>'> -->
 								<?php foreach ($video->players as $player): ?>
-									<?php if($player['player_image']) echo $this->Html->image($player['player_image'], array('class' => 'img-responsive thumbMiddle', 'alt' => $player['player_firstname'] . ' ' . $player['player_surname'])); ?>
+									<?php if($player['player_image']) echo $this->Html->image('/img/players/' . $player['player_image'], array('class' => 'img-responsive thumbMiddle', 'alt' => $player['player_firstname'] . ' ' . $player['player_surname'])); ?>
 								<?php endforeach; ?>
 								<ul class=" videos">
 									<?php foreach ($video->players as $player): ?>
