@@ -1,6 +1,6 @@
 <div class="navbar-header <?php echo $location; ?>">
 	<!-- <a class="navbar-brand <?php //echo $location; ?>" href="/"><span style="color:#000;">Sno</span><span style="color:#fae042;">ok<strong>v</span><span style="color:#ed2939;">iew</strong></span><strong>.</strong></a> -->
-	<a class="navbar-brand <?php echo $location; ?>" href="/"><span style="color:#002395;">Sno</span><span style="color:#fff;">ok<strong>v</span><span style="color:#ed2939;">iew</strong></span><strong>.</strong></a>
+	<a class="navbar-brand <?php echo $location; ?>" href="/"><!-- <span style="color:#002395;">Sno</span><span style="color:#fff;">ok<strong>v</span><span style="color:#ed2939;">iew</strong></span> -->Snook<strong>view</strong></span><strong>.</strong></a>
 	<?php echo $headingOne; ?>
 		<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
 		<span class="sr-only">Toggle navigation</span>

@@ -1267,23 +1267,22 @@ body
 				width: 100%;
 			}
 			.input{
+				margin-bottom: 15px;
 				img{
 					cursor: hand;
 				}
 			}
-			.form-group{
-				select{
-					/*deletes the arrows on a dropdown field*/
-					-webkit-appearance: @noAppearance;
-					display: inline;
-					&[multiple],
-					&[size]{
-						height: 500px;
-					}
+			select{
+				/*deletes the arrows on a dropdown field*/
+				-webkit-appearance: @noAppearance;
+				display: inline;
+				&[multiple],
+				&[size]{
+					height: 500px;
 				}
-				textarea{ 
-					resize: @noResize;
-				}
+			}
+			textarea{ 
+				resize: @noResize;
 			}
 			.form-control{
 				border-radius: @noRadius;

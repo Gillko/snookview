@@ -1084,19 +1084,22 @@ form fieldset legend {
 form fieldset label {
   width: 100%;
 }
+form fieldset .input {
+  margin-bottom: 15px;
+}
 form fieldset .input img {
   cursor: hand;
 }
-form fieldset .form-group select {
+form fieldset select {
   /*deletes the arrows on a dropdown field*/
   -webkit-appearance: none;
   display: inline;
 }
-form fieldset .form-group select[multiple],
-form fieldset .form-group select[size] {
+form fieldset select[multiple],
+form fieldset select[size] {
   height: 500px;
 }
-form fieldset .form-group textarea {
+form fieldset textarea {
   resize: none;
 }
 form fieldset .form-control {

@@ -1,6 +1,9 @@
 <?php $this->start('meta'); ?>
-	<title>Snookview - Edit Favorite</title>
+
+	<title>Snookview - Admin Edit Favorite</title>
+
 <?php $this->end(); ?>
+
 <div class="row">
 	<div class="col-md-3">
 		<ul class="nav nav-pills nav-stacked">
@@ -8,53 +11,63 @@
 				<?= 
 					$this->Form->postLink(
 					    'Delete',[
-					    	'action' => 'delete', $favorite->favorite_id
+					    	'action' 		=> 'delete', $favorite->favorite_id
 					    ],
 					    [
-					    	'confirm' => 'Are you sure?'
+					    	'confirm' 		=> 'Are you sure?'
 					    ]
 					)
 				?>
 				<?php
 					echo $this->Form->end();
 				?>
-				<?php //echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $this->Form->value('Favorite.favorite_id')), null, __('Are you sure you want to delete %s?', $this->Form->value('Favorite.favorite_id'))); ?>
 			</li>
 		</ul>
 	</div>
+
 	<div class="col-md-9">
-		<?php echo $this->Form->create('Favorite', array(
-			'inputDefaults' => array(
-			'div' => 'form-group',
-			'wrapInput' => false,
-			'class' => 'form-control'
-		),
-			'class' => 'well'
-		)); ?>
+		<?php 
+			echo $this->Form->create('Favorite', 
+				[
+					'inputDefaults' => 
+					[
+						'div' 				=> 'form-group',
+						'wrapInput' 		=> false,
+						'class' 			=> 'form-control'
+					],
+					'class' 				=> 'well'
+				]
+			);
+		?>
 		<fieldset>
-			<legend><?php echo __('Edit Favorite'); ?></legend>
-			<div class="form-group">
-				<?php
-					echo $this->Form->control('user_id', array(
-						'class' => 'form-control',
-						'value' => $favorite->user_id
-					));
-				?>
-			</div>
-			<div class="form-group">
-				<?php
-					echo $this->Form->control('video_id', array(
-						'class' => 'form-control',
-						'value' => $favorite->video_id
-					));
-				?>
-			</div>
-			<div class="submit">
-				<?php
-					echo $this->Form->button(__('Edit'), ['class'=> 'btn btn-default btn-success btn-lg']);
-				?>
-			</div>
+			<legend><?php echo __('Admin Edit Favorite'); ?></legend>
 			<?php
+				echo $this->Form->control('user_id', 
+					[
+						'class' 			=> 'form-control',
+						'value' 			=> $favorite->user_id
+					]
+				);
+
+				echo $this->Form->control('video_id', 
+					[
+						'class' 			=> 'form-control',
+						'value' 			=> $favorite->video_id
+					]
+				);
+
+				echo $this->Html->div(
+					'submit'
+				);
+
+				echo $this->Form->button(
+					__('Edit'), 
+						[
+							'class'			=> 'btn btn-default btn-success btn-lg'
+						]
+					)
+				;
+
 				echo $this->Form->end();
 			?>
 		</fieldset>

@@ -1,13 +1,21 @@
 <?php $this->start('meta'); ?>
+
 	<title>Snookview - View Video</title>
+
 <?php $this->end(); ?>
-<?php echo $this->element('viewActions', array(
-	"list" 		=> ' List Videos',
-	"edit" 		=> ' Edit Video',
-	"delete" 	=> ' Delete Video',
-	"id" 		=> $video->video_id,
-	"display" 	=> $video->video_title
-)); ?>
+<?php 
+	echo $this->element(
+		'viewActions',
+			[
+				"list" 		=> ' List Videos',
+				"edit" 		=> ' Edit Video',
+				"delete" 	=> ' Delete Video',
+				"id" 		=> $video->video_id,
+				"display" 	=> $video->video_title
+			]
+		)
+	; 
+?>
 <div class="table-responsive">
 	<table class="table table-striped table-bordered">
 		<tr>
@@ -24,20 +32,30 @@
 			<th><?php echo __('Session'		); ?></th>
 		</tr>
 		<tr>
-			<td><?php echo $video->video_id 								?></td>
-			<td><?php echo $video->video_slug 								?></td>
-			<td><?php echo $video->video_title 								?></td>
-			<td><?php echo date("d-m-Y", strtotime($video->video_date)); 	?></td>
-			<td><?php echo $video->video_scoreA								?></td>
-			<td><?php echo $video->video_scoreB 							?></td>
-			<td><?php echo $video->video_url 								?></td>
+			<td><?php echo $video->video_id 	?></td>
+			<td><?php echo $video->video_slug 	?></td>
+			<td><?php echo $video->video_title 	?></td>
+			<td>
+				<?php 
+					echo date(
+						"d-m-Y", 
+						strtotime(
+							$video->video_date
+						)
+					); 
+				?>
+			</td>
+			<td><?php echo $video->video_scoreA	?></td>
+			<td><?php echo $video->video_scoreB ?></td>
+			<td><?php echo $video->video_url 	?></td>
 			<td>
 				<?php 
 					echo $this->Html->link(
-						$video->tournament->tournament_name, [
-							'controller' => 'tournaments', 
-							'action' => 'adminView', 
-							$video->tournament->tournament_id
+						$video->tournament->tournament_name, 
+							[
+								'controller' 	=> 'tournaments', 
+								'action' 		=> 'adminView', 
+								$video->tournament->tournament_id
 							]
 						)
 					; 
@@ -46,10 +64,11 @@
 			<td>
 				<?php 
 					echo $this->Html->link(
-						$video->round->round_name, [
-							'controller' => 'rounds', 
-							'action' => 'adminView', 
-							$video->round->round_id
+						$video->round->round_name, 
+							[
+								'controller' 	=> 'rounds', 
+								'action' 		=> 'adminView', 
+								$video->round->round_id
 							]
 						)
 					;
@@ -58,10 +77,11 @@
 			<td>
 				<?php 
 					echo $this->Html->link(
-						$video->timeline->timeline_title, [
-							'controller' => 'timelines', 
-							'action' => 'adminView', 
-							$video->timeline->timeline_id
+						$video->timeline->timeline_title, 
+							[
+								'controller' 	=> 'timelines', 
+								'action' 		=> 'adminView', 
+								$video->timeline->timeline_id
 							]
 						)
 					;
@@ -70,10 +90,11 @@
 			<td>
 				<?php 
 					echo $this->Html->link(
-						$video->session->session_title, [
-							'controller' => 'sessions', 
-							'action' => 'adminView', 
-							$video->session->session_id
+						$video->session->session_title, 
+							[
+								'controller' 	=> 'sessions', 
+								'action' 		=> 'adminView', 
+								$video->session->session_id
 							]
 						)
 					;
@@ -109,10 +130,11 @@
 					<td>
 						<?php 
 							echo $this->Html->link(
-								$player->player_id, [
-									'controller' => 'players', 
-									'action' => 'adminView', 
-									$player->player_id
+								$player->player_id, 
+									[
+										'controller' => 'players', 
+										'action' => 'adminView', 
+										$player->player_id
 									]
 								)
 							; 
@@ -182,10 +204,11 @@
 					<td>
 						<?php 
 							echo $this->Html->link(
-								$comment->comment_id, [
-									'controller' => 'comments', 
-									'action' => 'adminView', 
-									$comment->comment_id
+								$comment->comment_id, 
+									[
+										'controller' => 'comments', 
+										'action' => 'adminView', 
+										$comment->comment_id
 									]
 								)
 							; 

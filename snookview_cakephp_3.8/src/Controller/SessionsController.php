@@ -56,7 +56,7 @@ class SessionsController extends AppController {
 			$session = $this->Sessions->patchEntity($session, $this->request->data);
 			
 			if ($this->Sessions->save($session)) {
-				$this->Flash->success(__('The session has been saved.'));
+				$this->Flash->success(__('The session has been updated.'));
 
 				return $this->redirect(['action' => 'adminIndex']);
 			} else {
