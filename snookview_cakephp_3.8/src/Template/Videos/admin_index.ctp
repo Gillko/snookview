@@ -46,14 +46,12 @@
 					<tr>
 						<td>
 							<?php 
-								echo $this->Html->link(
-									$video->video_id, 
-										[
-											'action' => 'adminView', 
-											$video->video_id
-										]
-									)
-								; 
+								echo $this->Html->link($video->video_id, 
+									[
+										'action' => 'adminView', 
+										$video->video_id
+									]
+								); 
 							?>
 						</td>
 						<td><?php echo $video->video_title	 		?></td>
@@ -72,51 +70,41 @@
 						<td><?php echo $video->video_url			?></td>
 						<td>
 							<?php
-								echo $this->Html->link(
-									$video->tournament->tournament_name, 
-										[
-											'action' => 'adminView', 
-											$video->tournament->tournament_id
-										]
-									)
-								;
+								echo $this->Html->link($video->tournament->tournament_name, 
+									[
+										'action' => 'adminView', 
+										$video->tournament->tournament_id
+									]
+								);
 							?>
 						</td>
 						<td>
 							<?php
-								echo $this->Html->link(
-									$video->round->round_name, 
-										[
-											'action' => 'adminView', 
-											$video->round->round_id
-										]
-									)
-								;
+								echo $this->Html->link($video->round->round_name, 
+									[
+										'action' => 'adminView', 
+										$video->round->round_id
+									]
+								);
 							?>
 						</td>
 						<td>
 							<?php
-								echo $this->Html->link(
-									$video->timeline->timeline_title, 
-										[
-											'action' => 'adminView', 
-											$video->timeline->timeline_id
-										]
-									)
-								;
+								echo $this->Html->link($video->timeline->timeline_title, 
+									[
+										'action' => 'adminView', 
+										$video->timeline->timeline_id
+									]
+								);
 							?>
 						</td>
 						<td class="actions">
 							<?php 
-								echo $this->Html->link(
-									$this->Html->tag(
-										'i', 
-										'', 
-										[
-											'class' => 'glyphicon glyphicon-edit'
-										]
-									) 
-									. "", 
+								echo $this->Html->link($this->Html->tag(
+									'i', '', 
+									[
+										'class' => 'glyphicon glyphicon-edit'
+									]) . "", 
 									[
 										'action' 	=> 'adminEdit', $video->video_id
 									], 
@@ -127,14 +115,12 @@
 								); 
 							?>
 							<?php 
-								echo $this->element(
-									'deleteAction', 
-										[
-											"idDeleteAction" 		=> $video->video_id,
-											"displayDeleteAction" 	=> $video->video_title
-										]
-									)
-								; 
+								echo $this->element('deleteAction', 
+									[
+										"idDeleteAction" 		=> $video->video_id,
+										"displayDeleteAction" 	=> $video->video_title
+									]
+								); 
 							?>
 						</td>
 					</tr>

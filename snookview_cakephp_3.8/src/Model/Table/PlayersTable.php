@@ -8,7 +8,6 @@ class PlayersTable extends Table
 {
 	public function initialize(array $config)
 	{
-
 		$this->belongsToMany('Videos', [
 			'joinTable' => 'players_videos',
 			'foreignKey' => 'player_id',
